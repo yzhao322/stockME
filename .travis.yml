@@ -9,3 +9,4 @@ cache:
 "scripts": {
   "lint": "eslint \"./**/*.js\""
 }
+
