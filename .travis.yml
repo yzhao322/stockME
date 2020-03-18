@@ -6,7 +6,4 @@ branches:
 cache:
   directories:
     - node_modules
-"scripts": {
-  "test": "mocha"
-}
 
