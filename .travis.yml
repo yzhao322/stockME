@@ -6,7 +6,5 @@ branches:
 cache:
   directories:
     - node_modules
-"scripts": {
-  "lint": "eslint \"./**/*.js\""
-}
+
 
