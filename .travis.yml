@@ -8,6 +8,8 @@ install:
 cache:
   directories:
     - node_modules
-scripts:
-    - npm test
+script:
+  - npm run lint
+  - npm run build
+  - npm test
 
