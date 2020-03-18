@@ -3,7 +3,11 @@ node_js: "12"
 branches:
   only:
     - master
+install:
+    - npm install
 cache:
   directories:
     - node_modules
+scripts:
+    - npm test
 
