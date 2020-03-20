@@ -22,9 +22,19 @@ module.exports = function(app) {
         res.redirect(307, "/api/login");
       })
       .catch(function(err) {
-        res.status(401).json(err);
+        console.log(err);
       });
   });
+
+  app.post("/api/stock_name", function (req, res) {
+    db.Stock.create({
+      stockname: req.body.stockname,
+      username: req.body.username
+    }).catch(function (err) {
+      console.log(err);
+    });
+    
+})
 
   // Route for logging user out
   app.get("/logout", function(req, res) {
@@ -38,12 +48,18 @@ module.exports = function(app) {
       // The user is not logged in, send back an empty object
       res.json({});
     } else {
-      // Otherwise send back the user's email and id
-      // Sending back a password, even a hashed password, isn't a good idea
-      res.json({
-        email: req.user.email,
-        id: req.user.id
-      });
+      db.Stock.findAll({
+        where: {
+          username: req.user.email
+        }
+      }).then(function (stockdata) {
+        res.json({
+          email: req.user.email,
+          id: req.user.id,
+          data: stockdata
+        });
+      })
     }
   });
+
 };
