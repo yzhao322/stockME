@@ -26,6 +26,18 @@ module.exports = function(app) {
       });
   });
 
+  app.post("/api/stock_name", function (req, res) {
+    db.Stock.create({
+      stockname: req.body.stockname,
+      username: req.body.username
+    }).then(function () {
+      res.redirect("/members");
+    }).catch(function (err) {
+      console.log(err);
+    });
+    
+})
+
   // Route for logging user out
   app.get("/logout", function(req, res) {
     req.logout();
@@ -46,4 +58,5 @@ module.exports = function(app) {
       });
     }
   });
+
 };
