@@ -1,8 +1,8 @@
 $(document).ready(function() {
   // Getting references to our form and input
-  var signUpForm = $("#sign-up");
-  var emailInput = $("#email-input");
-  var passwordInput = $("#password-input");
+  var signUpForm = $("form.signup");
+  var emailInput = $("input#email-input");
+  var passwordInput = $("input#password-input");
 
   // When the signup button is clicked, we validate the email and password are not blank
   signUpForm.on("submit", function(event) {
@@ -28,9 +28,8 @@ $(document).ready(function() {
       email: email,
       password: password
     })
-      .then(function (data) {
-        console.log(data);
-        // window.location.replace("/members");
+      .then(function(data) {
+        window.location.replace("/members");
         // If there's an error, handle it by throwing up a bootstrap alert
       })
       .catch(handleLoginErr);
