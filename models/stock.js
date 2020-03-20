@@ -5,6 +5,7 @@ module.exports = function(sequelize, DataTypes) {
     stockname: {
       type: DataTypes.STRING,
       allowNull: false,
+      unique: true
     },
     username: {
       type: DataTypes.STRING,
@@ -13,7 +14,7 @@ module.exports = function(sequelize, DataTypes) {
   });
   Stock.prototype.search = function (stockname) {
     alpha.data.intraday(`${stockname}`).then(data => {
-      return data;
+      console.log(data);
     });
   }
   return Stock;

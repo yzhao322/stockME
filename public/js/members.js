@@ -4,7 +4,10 @@ $(document).ready(function () {
 
   $.get("/api/user_data").then(function (data) {
     $(".member-name").text(data.email);
-  })
+    for (let i = 0; i < data.data.length; i++){
+      $(".stock-data").append($("<button>").text(data.data[i].stockname));
+    }
+  });
 
   search.on("submit", function (event) {
     event.preventDefault();
@@ -27,10 +30,5 @@ $(document).ready(function () {
       .catch((Err) => {
         console.log(Err);
       })
-      // .then(function () {
-      //   $.get("/api/stock_data").then(function (data) {
-      //     $(".stock-data").text(data);
-      //   })
-      // });;
   }
 });

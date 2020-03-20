@@ -30,8 +30,6 @@ module.exports = function(app) {
     db.Stock.create({
       stockname: req.body.stockname,
       username: req.body.username
-    }).then(function () {
-      res.redirect("/members");
     }).catch(function (err) {
       console.log(err);
     });
@@ -50,12 +48,17 @@ module.exports = function(app) {
       // The user is not logged in, send back an empty object
       res.json({});
     } else {
-      // Otherwise send back the user's email and id
-      // Sending back a password, even a hashed password, isn't a good idea
-      res.json({
-        email: req.user.email,
-        id: req.user.id
-      });
+      db.Stock.findAll({
+        where: {
+          username: req.user.email
+        }
+      }).then(function (stockdata) {
+        res.json({
+          email: req.user.email,
+          id: req.user.id,
+          data: stockdata
+        });
+      })
     }
   });
 
