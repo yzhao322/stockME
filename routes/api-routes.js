@@ -62,4 +62,16 @@ module.exports = function(app) {
     }
   });
 
+  app.delete("/api/user_data/:stockname", function (req, res) {
+    console.log(req.params.stockname);
+    db.Stock.destroy({
+      where: {
+        stockname: req.params.stockname,
+      }
+    }).then(function(data) {
+      res.json(data);
+    }).catch(function (err) {
+      console.log(err);
+    });
+  })
 };
