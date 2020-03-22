@@ -1,6 +1,9 @@
 // Requiring our models and passport as we've configured it
 var db = require("../models");
 var passport = require("../config/passport");
+var axios = require('axios');
+var apiKey = "4MH53GP5D4RCM8NJ";
+var apikey2 = "E763I45M680QQVZB";
 
 module.exports = function(app) {
   // Using the passport.authenticate middleware with our local strategy.
@@ -29,12 +32,25 @@ module.exports = function(app) {
   app.post("/api/stock_name", function (req, res) {
     db.Stock.create({
       stockname: req.body.stockname,
-      username: req.body.username
+      username: req.body.username,
+      stocknotes: req.body.stocknotes
+    }).then(function() {
+      res.redirect("/members");
     }).catch(function (err) {
       console.log(err);
     });
     
-})
+  })
+  app.get("/api/search_this_stock/:symbol", function (req, res) {
+    var stockUrl = `https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol=${req.params.symbol}&apikey=${apikey2}`;
+    axios.get(stockUrl)
+      .then(function (response) {
+        res.json(response.data);
+      })
+      .catch((Err) => {
+        console.log(Err);
+      });
+  })
 
   // Route for logging user out
   app.get("/logout", function(req, res) {
@@ -61,9 +77,7 @@ module.exports = function(app) {
       })
     }
   });
-
   app.delete("/api/user_data/:stockname", function (req, res) {
-    console.log(req.params.stockname);
     db.Stock.destroy({
       where: {
         stockname: req.params.stockname,
@@ -74,4 +88,21 @@ module.exports = function(app) {
       console.log(err);
     });
   })
+
+  app.put("/api/stock_name", function (req, res) {
+    db.Stock.update({
+      stocknotes: req.body.stocknotes
+    }, {
+        where: {
+          stockname: req.body.stockname
+        }
+      }).then(function (data) {
+        res.json(data);
+      })
+      .catch(function (err) {
+        // Whenever a validation or flag fails, an error is thrown
+        // We can "catch" the error to prevent it from being "thrown", which could crash our node app
+        res.json(err);
+      });
+  });
 };

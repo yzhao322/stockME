@@ -1,4 +1,3 @@
-const alpha = require('alphavantage')({ key: '4MH53GP5D4RCM8NJ' });
 
 module.exports = function(sequelize, DataTypes) {
   var Stock = sequelize.define("Stock", {
@@ -10,12 +9,11 @@ module.exports = function(sequelize, DataTypes) {
     username: {
       type: DataTypes.STRING,
       allowNull: false,
+    },
+    stocknotes: {
+      type: DataTypes.STRING,
+      allowNull: true,
     }
   });
-  Stock.prototype.search = function (stockname) {
-    alpha.data.intraday(`${stockname}`).then(data => {
-      console.log(data);
-    });
-  }
   return Stock;
 };
