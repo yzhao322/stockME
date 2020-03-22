@@ -4,6 +4,7 @@ $(document).ready(function () {
   var addNotes = $("form.update-notes");
   var stockname = $("input#stock-input");
   var stocknotes = $("textarea#stock-notes");
+  
 
  
   $.get("/api/user_data").then(function (data) {
@@ -14,12 +15,15 @@ $(document).ready(function () {
     }
   });
 
-    var searchButton = $("form.search");
-    searchButton.on("click",".stock-data", function () {
-      var symbol = this.id;
-      getStockData(symbol);
-    });
 
+
+    var searchButton = $("form.search");
+    searchButton.on("click", ".stock-data", function (event) {
+    event.preventDefault();
+    var symbol = this.id;
+    getStockData(symbol);
+    showData(symbol);
+    });
 
   add.on("submit", function (event) {
     event.preventDefault();
@@ -57,15 +61,30 @@ $(document).ready(function () {
 
   function getStockData(symbol) {
     $.get("/api/search_this_stock" + symbol)
-      .then(function (data) {
-        let stockInfo = $("<p>").text('data');
-        $(".info").append(stockInfo);
+      .then(function () {
         window.location.replace("/members");
       })
       .catch((Err) => {
         console.log(Err);
       });
+    return symbol;
   }
+
+  function showData(symbol) {
+    $.get(`/api/search_this_stock/${symbol}`).then(function (data) {
+      $(".info1").text("symbol:  " + data["Global Quote"]["01. symbol"]);
+      $(".info2").text("open:  " + data["Global Quote"]["02. open"]);
+      $(".info3").text("high:  " + data["Global Quote"]["03. high"]);
+      $(".info4").text("low:  " + data["Global Quote"]["04. low"]);
+      $(".info5").text("price:  " + data["Global Quote"]["05. price"]);
+      $(".info6").text("volume:  " + data["Global Quote"]["06. volume"]);
+      $(".info7").text("latest trading day:  " + data["Global Quote"]["07. latest trading day"]);
+      $(".info8").text("previous close:  " + data["Global Quote"]["08. previous close"]);
+      $(".info9").text("change:  " + data["Global Quote"]["09. change"]);
+      $(".info10").text("change percent:  " + data["Global Quote"]["10. change percent"]);
+    });
+  }
+
 
   function addStock(Name, notes) {
     $.post("/api/stock_name", {

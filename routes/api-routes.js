@@ -42,7 +42,7 @@ module.exports = function(app) {
     
   })
   app.get("/api/search_this_stock/:symbol", function (req, res) {
-    var stockUrl = `https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol=${req.params.symbol}&apikey=${apikey2}`;
+    var stockUrl = `https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol=${req.params.symbol}&apikey=${apiKey}`;
     axios.get(stockUrl)
       .then(function (response) {
         res.json(response.data);
