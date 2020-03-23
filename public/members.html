@@ -27,21 +27,25 @@
     </div>
   </div>
 
-  <form class="addup">
     <div class="form-group">
       <label for="exampleInputEmail1">Stock Name</label>
       <input type="text" class="form-control" id="stock-input" placeholder="stock"><br>
       <label for="stocknotes">Stock Notes</label>
-      <textarea type="text" class="form-control" id="stock-notes" placeholder="stock notes"></textarea> <br>
+      <textarea type="text" class="form-control" id="stock-notes" placeholder="stock notes"></textarea>
+    </div>
+
+  <form class="addup" style="display: inline-block">
       <button type="submit" class="btn btn-default" id="add">Add</button>
   </form>
-  <form class="delete">
+  <form class="delete" style="display: inline-block">
     <button type="submit" class="btn btn-default" id="delete">Delete</button>
   </form>
-  <form class="update-notes">
+  <form class="update-notes" style="display: inline-block">
     <button type="submit" class="btn btn-default" id="update-notes">Update Notes</button>
   </form>
-  </div>
+  <form class="clear-all" style="display: inline-block">
+      <button type="submit" class="btn btn-default" id="clear-all">Clear All</button>
+    </form>
 
   <br><br>
   <div class="container">
