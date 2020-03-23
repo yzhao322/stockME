@@ -1,10 +1,12 @@
 
 <h1>Welcome to manager page!</h1>
 <ul>
-  {{#each userlist}}
-    <p>{{userlist_username}}
+  
+    {{#each userlist}}
+    
+    <p>{{this}}
     <button class="view-details">View Details</button> <button class="delete-account">Delete this account</button></p>
-  {{/each}}
+    {{/each}}
   
 </ul>
 
@@ -12,9 +14,8 @@
 <form class="create-form">
 
   <div class="form-group">
-    <textarea id="burger" name="burger_name"></textarea>
+    <textarea id="notes" name="account-notes"></textarea>
   </div>
 
-  <button type="submit" id="submit">Submit</button>
-  <p>Enter a burger you want to eat and click the "Submit" button</p>
+  <button type="submit" id="submit">Submit</button><p>Enter a note that you want to add to account</p>
 </form>

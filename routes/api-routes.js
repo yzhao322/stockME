@@ -78,16 +78,6 @@ module.exports = function(app) {
     }
   });
 
-  // app.get("/managers", function (req, res) {
-  //   db.User.findAll()
-  //   .then(function (data) {
-  //     console.log(data.User.dataValues);
-  //     // res.render("index", { userlist: data });
-  //   }).catch(function (error) {
-  //       console.error(error);
-  //   })
-  // })
-
   app.delete("/api/user_data/:stockname", function (req, res) {
     db.Stock.destroy({
       where: {
