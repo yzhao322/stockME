@@ -4,9 +4,9 @@ $(document).ready(function () {
   var addNotes = $("form.update-notes");
   var stockname = $("input#stock-input");
   var stocknotes = $("textarea#stock-notes");
-  
+  var searchButton = $("form.search");
+  var clearAll = $("form.clear-all");
 
- 
   $.get("/api/user_data").then(function (data) {
     $(".member-name").text(data.email);
     for (let i = 0; i < data.data.length; i++) {
@@ -15,16 +15,7 @@ $(document).ready(function () {
     }
   });
 
-
-
-    var searchButton = $("form.search");
-    searchButton.on("click", ".stock-data", function (event) {
-    event.preventDefault();
-    var symbol = this.id;
-    getStockData(symbol);
-    showData(symbol);
-    });
-
+  //Add stock name as button into stock search panel
   add.on("submit", function (event) {
     event.preventDefault();
     var stockName = stockname.val().trim();
@@ -36,6 +27,7 @@ $(document).ready(function () {
     stockname.val("");
   });
 
+  //delet stock name from stock search panel
   deleteit.on("submit", function (event) {
     event.preventDefault();
     var stockName = stockname.val().trim();
@@ -47,6 +39,7 @@ $(document).ready(function () {
 
   });
 
+  //add user notes
   addNotes.on("submit", function (event) {
     event.preventDefault();
     var notes = stocknotes.val().trim();
@@ -58,6 +51,21 @@ $(document).ready(function () {
     stockname.val("");
     stocknotes.val("");
   });
+
+ //clear all stock on stock search panel
+  clearAll.on("submit", function (event) {
+    event.preventDefault();
+    deleteALL();
+  })
+  
+  //send stock to controller and get data back
+  searchButton.on("click", ".stock-data", function (event) {
+    event.preventDefault();
+    var symbol = this.id;
+    getStockData(symbol);
+    showData(symbol);
+  });
+
 
   function getStockData(symbol) {
     $.get("/api/search_this_stock" + symbol)
@@ -115,18 +123,31 @@ $(document).ready(function () {
       })
   }
 
+  function deleteALL() {
+    $.ajax({
+      method: "DELETE",
+      url: "/api/user_data"
+    })
+      .then(function () {
+        window.location.replace("/members");
+      })
+      .catch((Err) => {
+        console.log(Err);
+      })
+  }
+
   function updateStockNotes(notes, stockName) {
     $.ajax({
       method: "PUT",
       url: "/api/stock_name",
-      data: {stocknotes: notes, stockname: stockName }
+      data: { stocknotes: notes, stockname: stockName }
     })
       .then(function () {
-      window.location.replace("/members");
-    })
-    .catch((Err) => {
-      console.log(Err);
-    });
+        window.location.replace("/members");
+      })
+      .catch((Err) => {
+        console.log(Err);
+      });
   }
 
 });
