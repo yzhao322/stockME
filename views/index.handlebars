@@ -1,20 +1,30 @@
 
 <h1>Welcome to manager page!</h1>
 <ul>
-  {{#each userlist}}
-    <p>{{userlist_username}}
-    <button class="view-details">View Details</button> <button class="delete-account">Delete this account</button></p>
-  {{/each}}
+  
+    {{#each userlist}}
+    
+    <div><p>{{this}}</p>
+    <button class="view-details">View Details</button> <button class="delete-account">Delete this account</button></div>
+    <p class="account-details"></p>{{/each}}
   
 </ul>
 
+<br><br>
 
-<form class="create-form">
+<p class="user-list"> </p>
 
-  <div class="form-group">
-    <textarea id="burger" name="burger_name"></textarea>
-  </div>
+<br><br><br>
 
-  <button type="submit" id="submit">Submit</button>
-  <p>Enter a burger you want to eat and click the "Submit" button</p>
+<form class="create-notes">
+
+     <div class="form-group">
+      <label for="account-notes">Username</label>
+      <input type="text" class="form-control" id="username" placeholder="Username"><br>
+      <label for="account-notes">Account Notes</label><br>
+      <textarea type="text" class="form-control" id="account-notes" placeholder="Account Notes"></textarea>
+    </div>
+
+
+  <button type="submit" id="submit">Submit</button><p>Enter a note that you want to add to this account</p>
 </form>

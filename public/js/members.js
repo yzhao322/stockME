@@ -75,7 +75,6 @@ $(document).ready(function () {
       .catch((Err) => {
         console.log(Err);
       });
-    return symbol;
   }
 
   function showData(symbol) {

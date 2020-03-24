@@ -34,13 +34,13 @@ module.exports = function(app) {
       stockname: req.body.stockname,
       username: req.body.username,
       stocknotes: req.body.stocknotes
-    }).then(function() {
+    }).then(function () {
       res.redirect("/members");
     }).catch(function (err) {
       console.log(err);
     });
-    
-  })
+  });
+
   app.get("/api/search_this_stock/:symbol", function (req, res) {
     var stockUrl = `https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol=${req.params.symbol}&apikey=${apiKey}`;
     axios.get(stockUrl)
@@ -50,7 +50,7 @@ module.exports = function(app) {
       .catch((Err) => {
         console.log(Err);
       });
-  })
+  });
 
   // Route for logging user out
   app.get("/logout", function(req, res) {
@@ -74,42 +74,59 @@ module.exports = function(app) {
           id: req.user.id,
           data: stockdata
         });
-      })
+      });
     }
   });
 
-  // app.get("/managers", function (req, res) {
-  //   db.User.findAll()
-  //   .then(function (data) {
-  //     console.log(data.User.dataValues);
-  //     // res.render("index", { userlist: data });
-  //   }).catch(function (error) {
-  //       console.error(error);
-  //   })
-  // })
+  app.get("/api/user/:username", function (req, res) {
+    db.User.findAll({
+      where: {
+        email: req.params.username
+      }
+    })
+      .then(function (data) {
+        let userdetails = data[0].dataValues;
+        res.json(userdetails);
+      }).catch(function (error) {
+        console.error(error);
+      });
+  });
 
   app.delete("/api/user_data/:stockname", function (req, res) {
     db.Stock.destroy({
       where: {
         stockname: req.params.stockname,
       }
-    }).then(function(data) {
+    }).then(function (data) {
       res.json(data);
     }).catch(function (err) {
       console.log(err);
     });
-  })
+  });
 
   app.delete("/api/user_data", function (req, res) {
     db.Stock.destroy({
       where: {}
     })
-    .then(function(data) {
+      .then(function (data) {
+        res.json(data);
+      }).catch(function (err) {
+        console.log(err);
+      });
+  });
+
+
+  app.delete("/api/user/:username", function (req, res) {
+    db.User.destroy({
+      where: {
+        email: req.params.username,
+      }
+    }).then(function (data) {
       res.json(data);
     }).catch(function (err) {
       console.log(err);
     });
-  })
+  });
 
   app.put("/api/stock_name", function (req, res) {
     db.Stock.update({
@@ -127,4 +144,20 @@ module.exports = function(app) {
         res.json(err);
       });
   });
+
+  app.put("/api/user/notes/:username", function (req, res) {
+    db.User.update({
+      notes: req.body.notes
+    }, {
+        where: {
+          email: req.params.username
+        }
+      }).then(function (data) {
+        res.json(data);
+      })
+      .catch(function (err) {
+        res.json(err);
+      });
+  });
+
 };
