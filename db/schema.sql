@@ -2,3 +2,4 @@
 DROP DATABASE IF EXISTS user_db;
 -- Creates the "blogger" database --
 CREATE DATABASE user_db;
+select * from users;

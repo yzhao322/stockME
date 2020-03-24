@@ -4,18 +4,27 @@
   
     {{#each userlist}}
     
-    <p>{{this}}
-    <button class="view-details">View Details</button> <button class="delete-account">Delete this account</button></p>
-    {{/each}}
+    <div><p>{{this}}</p>
+    <button class="view-details">View Details</button> <button class="delete-account">Delete this account</button></div>
+    <p class="account-details"></p>{{/each}}
   
 </ul>
 
+<br><br>
 
-<form class="create-form">
+<p class="user-list"> </p>
 
-  <div class="form-group">
-    <textarea id="notes" name="account-notes"></textarea>
-  </div>
+<br><br><br>
 
-  <button type="submit" id="submit">Submit</button><p>Enter a note that you want to add to account</p>
+<form class="create-notes">
+
+     <div class="form-group">
+      <label for="account-notes">Username</label>
+      <input type="text" class="form-control" id="username" placeholder="Username"><br>
+      <label for="account-notes">Account Notes</label><br>
+      <textarea type="text" class="form-control" id="account-notes" placeholder="Account Notes"></textarea>
+    </div>
+
+
+  <button type="submit" id="submit">Submit</button><p>Enter a note that you want to add to this account</p>
 </form>

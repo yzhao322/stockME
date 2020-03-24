@@ -40,7 +40,11 @@ module.exports = function(app) {
   });
 
   app.get("/managers", isAuthenticated, function (req, res) {
-    db.User.findAll({})
+    db.User.findAll({
+      where: {
+        title: "Member"
+      }
+    })
       .then(function (data) {
         let userList = [];
         for (let i = 0; i < data.length; i++){
