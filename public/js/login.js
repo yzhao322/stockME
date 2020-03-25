@@ -38,7 +38,9 @@ $(document).ready(function() {
         }
         else if (data.title === "Manager") {
           window.location.replace("/managers");
-
+        }
+        else if (data.title === "Master") {
+          window.location.replace("/master");
         }
       })
       .catch(function(err) {

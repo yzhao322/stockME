@@ -160,4 +160,21 @@ module.exports = function(app) {
       });
   });
 
+  app.put("/api/user/title/:username", function (req, res) {
+    db.User.update({
+      title: req.body.title
+    }, {
+        where: {
+          email: req.params.username
+        }
+      }).then(function (data) {
+        res.json(data);
+      })
+      .catch(function (err) {
+        res.json(err);
+      });
+  });
+
+
+
 };

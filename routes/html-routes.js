@@ -16,6 +16,9 @@ module.exports = function(app) {
       else if (req.body.title === "Manager") {
         res.redirect("/managers");
       }
+      else if (req.body.title === "Master") {
+        res.redirect("/master");
+      }
     }
     res.sendFile(path.join(__dirname, "../public/signup.html"));
   });
@@ -28,6 +31,9 @@ module.exports = function(app) {
       }
       else if (req.body.title === "Manager") {
         res.redirect("/managers");
+      }
+      else if (req.body.title === "Master") {
+        res.redirect("/master");
       }
     }
     res.sendFile(path.join(__dirname, "../public/login.html"));
@@ -51,6 +57,29 @@ module.exports = function(app) {
             userList.push(data[i].dataValues.email)
         }
         res.render("index", { userlist: userList });
+      }).catch(function (error) {
+        console.error(error);
+      })
+  });
+  app.get("/master", isAuthenticated, function (req, res) {
+    db.User.findAll({
+      where: {
+        title: ["Member", "Manager"]
+      }
+    })
+      .then(function (data) {
+        let usermember = [];
+        let usermanager = [];
+        for (let i = 0; i < data.length; i++){
+          if (data[i].dataValues.title === "Member") {
+            usermember.push(data[i].dataValues);
+          }
+          else {
+            usermanager.push(data[i].dataValues);
+          }
+        }
+      
+        res.render("master", { usermember: usermember, usermanager:usermanager });
       }).catch(function (error) {
         console.error(error);
       })
