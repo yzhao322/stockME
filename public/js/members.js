@@ -6,7 +6,6 @@ $(document).ready(function () {
   let stocknotes = $("textarea#stock-notes");
   let searchButton = $("form.search");
   let clearAll = $("form.clear-all");
-  let purchasedsymbol = ""
 
   $.get("/api/user_data").then(function (data) {
     $(".member-name").text(data.email);
@@ -22,19 +21,19 @@ $(document).ready(function () {
         $(".PurchasedStock").append($("<ul>").text("Stock Purchased Shares: " + data.data[i].purchaseShares));
         $(".PurchasedStock").append($("<ul>").text("Stock Purchased Price: $" + data.data[i].purchasePrice));
         $(".PurchasedStock").append($("<ul>").text("Stock Purchased on: " + data.data[i].createdAt.slice(0, 10)));
-        let symbol = data.data[i].purchaseStockName;
-        let purchasedPrice = data.data[i].purchasePrice;
-        getStockData(symbol);
-        showData(symbol, username);
+        getStockData(data.data[i].purchaseStockName, username);
+        $("#profitOrLoss").on("click", function (event) {
+          event.preventDefault();
+          let shares = parseInt(data.data[i].purchaseShares);
+          let currentPrice = parseFloat($("#"+data.data[i].purchaseStockName).text().slice(7));
+          let currentPurchasedValue = shares * currentPrice;
+          let PurchasedValue = parseFloat(data.data[i].purchasePrice)
+          let spread = PurchasedValue - currentPurchasedValue;
+          $(".PurchasedStock").append($("<p>").text("Your Investments on "+ data.data[i].purchaseStockName + ": $" + spread.toFixed(3)));
+        })
       }
     })
-   
-    console.log(data);
-    for (let i = 0; i < data.data.length; i++) {
-      $(".PurchasedStock").append($("<button>").attr("class", "stock-data").attr("id", `${data.data[i].stockname}`).text(data.data[i].stockname));
-      $(".PurchasedStock").append($("<p>").text("\nNotes: " + data.data[i].stocknotes));
-    }
-  });
+  })
 
   //Add stock name as button into stock search panel
   add.on("submit", function (event) {
@@ -73,60 +72,57 @@ $(document).ready(function () {
     stocknotes.val("");
   });
 
- //clear all stock on stock search panel
+  //clear all stock on stock search panel
   clearAll.on("submit", function (event) {
     event.preventDefault();
     deleteALL();
   })
-  
+
   //send stock to controller and get data back
   searchButton.on("click", ".stock-data", function (event) {
     event.preventDefault();
     let symbol = this.id;
-    getStockData(symbol);
     let username = $(".member-name").text();
-    showData(symbol, username);
-    
+    getStockData(symbol, username);
   });
 
 
-  function getStockData(symbol) {
-    $.get("/api/search_this_stock" + symbol)
+  function getStockData(symbol, username) {
+    $.get("/api/search_this_stock/" + symbol)
       .then(function () {
-        window.location.replace("/members");
+        $.get(`/api/search_this_stock/${symbol}`).then(function (data) {
+          let newDiv = $("<div>");
+          newDiv.append($("<p>").text("symbol:  " + data["Global Quote"]["01. symbol"]));
+          newDiv.append($("<p>").text("open:  " + data["Global Quote"]["02. open"]));
+          newDiv.append($("<p>").text("high:  " + data["Global Quote"]["03. high"]));
+          newDiv.append($("<p>").text("low:  " + data["Global Quote"]["04. low"]));
+          newDiv.append($("<p>").text("price:  " + data["Global Quote"]["05. price"]).attr("id", data["Global Quote"]["01. symbol"]));
+          newDiv.append($("<p>").text("volume:  " + data["Global Quote"]["06. volume"]));
+          newDiv.append($("<p>").text("latest trading day:  " + data["Global Quote"]["07. latest trading day"]));
+          newDiv.append($("<p>").text("previous close:  " + data["Global Quote"]["08. previous close"]));
+          newDiv.append($("<p>").text("change:  " + data["Global Quote"]["09. change"]));
+          newDiv.append($("<p>").text("change percent:  " + data["Global Quote"]["10. change percent"]));
+          $(".stock-info").append(newDiv);
+          let purchaseInput = $("<input>");
+          let purchaseInputSubmit = $("<button>").text("submit");
+          $(".purchase").text("Enter shares you want to purchase at this price: ");
+          $(".purchase").append(purchaseInput);
+          $(".purchase").append(purchaseInputSubmit);
+          $("form.submitPurchase").on("submit", function (event) {
+            event.preventDefault();
+            let shares = parseFloat(purchaseInput.val());
+            let price = shares * data["Global Quote"]["05. price"];
+            let stockname = data["Global Quote"]["01. symbol"];
+            addPurchasePrice(price, stockname, username, shares);
+            purchaseInput.val("");
+          });
+        });
       })
       .catch((Err) => {
         console.log(Err);
       });
   }
 
-  function showData(symbol, username) {
-    $.get(`/api/search_this_stock/${symbol}`).then(function (data) {
-      $(".info1").text("symbol:  " + data["Global Quote"]["01. symbol"]);
-      $(".info2").text("open:  " + data["Global Quote"]["02. open"]);
-      $(".info3").text("high:  " + data["Global Quote"]["03. high"]);
-      $(".info4").text("low:  " + data["Global Quote"]["04. low"]);
-      $(".info5").text("price:  " + data["Global Quote"]["05. price"]);
-      $(".info6").text("volume:  " + data["Global Quote"]["06. volume"]);
-      $(".info7").text("latest trading day:  " + data["Global Quote"]["07. latest trading day"]);
-      $(".info8").text("previous close:  " + data["Global Quote"]["08. previous close"]);
-      $(".info9").text("change:  " + data["Global Quote"]["09. change"]);
-      $(".info10").text("change percent:  " + data["Global Quote"]["10. change percent"]);
-      let purchaseInput = $("<input>");
-      let purchaseInputSubmit = $("<button>").text("submit");
-      $(".purchase").text("Enter shares you want to purchase at this price: ");
-      $(".purchase").append(purchaseInput);
-      $(".purchase").append(purchaseInputSubmit);
-      $("form.submitPurchase").on("submit", function (event) {
-        event.preventDefault();
-        let shares = parseFloat(purchaseInput.val());
-        let price = shares * data["Global Quote"]["05. price"];
-        let stockname = data["Global Quote"]["01. symbol"];
-        addPurchasePrice(price, stockname, username, shares);
-        purchaseInput.val("");
-      })
-    });
-  }
 
 
   function addStock(Name, notes) {

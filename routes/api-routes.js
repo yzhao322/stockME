@@ -58,9 +58,8 @@ module.exports = function(app) {
   app.get("/api/search_this_stock/:symbol", function (req, res) {
     var stockUrl = `https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol=${req.params.symbol}&apikey=${apiKey}`;
     axios.get(stockUrl)
-      .then(function (response) {
-        console.log(response);
-        res.json(response.data);
+      .then(function (data) {
+        res.json(data.data);
       })
       .catch((Err) => {
         console.log(Err);
