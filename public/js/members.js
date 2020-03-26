@@ -1,11 +1,12 @@
 $(document).ready(function () {
-  var add = $("form.addup");
-  var deleteit = $("form.delete");
-  var addNotes = $("form.update-notes");
-  var stockname = $("input#stock-input");
-  var stocknotes = $("textarea#stock-notes");
-  var searchButton = $("form.search");
-  var clearAll = $("form.clear-all");
+  let add = $("form.addup");
+  let deleteit = $("form.delete");
+  let addNotes = $("form.update-notes");
+  let stockname = $("input#stock-input");
+  let stocknotes = $("textarea#stock-notes");
+  let searchButton = $("form.search");
+  let clearAll = $("form.clear-all");
+  let purchasedsymbol = ""
 
   $.get("/api/user_data").then(function (data) {
     $(".member-name").text(data.email);
@@ -13,13 +14,33 @@ $(document).ready(function () {
       $(".search").append($("<button>").attr("class", "stock-data").attr("id", `${data.data[i].stockname}`).text(data.data[i].stockname));
       $(".search").append($("<p>").text("\nNotes: " + data.data[i].stocknotes));
     }
+  }).then(function () {
+    let username = $(".member-name").text();
+    $.get("/api/purchased_stock/" + username).then(function (data) {
+      for (let i = 0; i < data.data.length; i++) {
+        $(".PurchasedStock").append($("<ul>").text("Stock Name: " + data.data[i].purchaseStockName));
+        $(".PurchasedStock").append($("<ul>").text("Stock Purchased Shares: " + data.data[i].purchaseShares));
+        $(".PurchasedStock").append($("<ul>").text("Stock Purchased Price: $" + data.data[i].purchasePrice));
+        $(".PurchasedStock").append($("<ul>").text("Stock Purchased on: " + data.data[i].createdAt.slice(0, 10)));
+        let symbol = data.data[i].purchaseStockName;
+        let purchasedPrice = data.data[i].purchasePrice;
+        getStockData(symbol);
+        showData(symbol, username);
+      }
+    })
+   
+    console.log(data);
+    for (let i = 0; i < data.data.length; i++) {
+      $(".PurchasedStock").append($("<button>").attr("class", "stock-data").attr("id", `${data.data[i].stockname}`).text(data.data[i].stockname));
+      $(".PurchasedStock").append($("<p>").text("\nNotes: " + data.data[i].stocknotes));
+    }
   });
 
   //Add stock name as button into stock search panel
   add.on("submit", function (event) {
     event.preventDefault();
-    var stockName = stockname.val().trim();
-    var notes = stocknotes.val().trim();
+    let stockName = stockname.val().trim();
+    let notes = stocknotes.val().trim();
     if (!stockName) {
       return;
     }
@@ -30,7 +51,7 @@ $(document).ready(function () {
   //delet stock name from stock search panel
   deleteit.on("submit", function (event) {
     event.preventDefault();
-    var stockName = stockname.val().trim();
+    let stockName = stockname.val().trim();
     if (!stockName) {
       return;
     }
@@ -42,8 +63,8 @@ $(document).ready(function () {
   //add user notes
   addNotes.on("submit", function (event) {
     event.preventDefault();
-    var notes = stocknotes.val().trim();
-    var stockName = stockname.val().trim();
+    let notes = stocknotes.val().trim();
+    let stockName = stockname.val().trim();
     if (!stockName || !notes) {
       return;
     }
@@ -61,9 +82,11 @@ $(document).ready(function () {
   //send stock to controller and get data back
   searchButton.on("click", ".stock-data", function (event) {
     event.preventDefault();
-    var symbol = this.id;
+    let symbol = this.id;
     getStockData(symbol);
-    showData(symbol);
+    let username = $(".member-name").text();
+    showData(symbol, username);
+    
   });
 
 
@@ -77,7 +100,7 @@ $(document).ready(function () {
       });
   }
 
-  function showData(symbol) {
+  function showData(symbol, username) {
     $.get(`/api/search_this_stock/${symbol}`).then(function (data) {
       $(".info1").text("symbol:  " + data["Global Quote"]["01. symbol"]);
       $(".info2").text("open:  " + data["Global Quote"]["02. open"]);
@@ -89,6 +112,19 @@ $(document).ready(function () {
       $(".info8").text("previous close:  " + data["Global Quote"]["08. previous close"]);
       $(".info9").text("change:  " + data["Global Quote"]["09. change"]);
       $(".info10").text("change percent:  " + data["Global Quote"]["10. change percent"]);
+      let purchaseInput = $("<input>");
+      let purchaseInputSubmit = $("<button>").text("submit");
+      $(".purchase").text("Enter shares you want to purchase at this price: ");
+      $(".purchase").append(purchaseInput);
+      $(".purchase").append(purchaseInputSubmit);
+      $("form.submitPurchase").on("submit", function (event) {
+        event.preventDefault();
+        let shares = parseFloat(purchaseInput.val());
+        let price = shares * data["Global Quote"]["05. price"];
+        let stockname = data["Global Quote"]["01. symbol"];
+        addPurchasePrice(price, stockname, username, shares);
+        purchaseInput.val("");
+      })
     });
   }
 
@@ -107,7 +143,20 @@ $(document).ready(function () {
       })
   }
 
-
+  function addPurchasePrice(price, stockname, username, shares) {
+    $.post("/api/stock/purchase_price", {
+      purchasePrice: price,
+      stockname: stockname,
+      username: username,
+      shares: shares
+    })
+      .then(function () {
+        window.location.replace("/members");
+      })
+      .catch((Err) => {
+        console.log(Err);
+      });
+  }
 
   function deleteStock(Name) {
     $.ajax({
@@ -148,5 +197,6 @@ $(document).ready(function () {
         console.log(Err);
       });
   }
+
 
 });
