@@ -1,6 +1,9 @@
 // Requiring our models and passport as we've configured it
 var db = require("../models");
 var passport = require("../config/passport");
+var axios = require('axios');
+var apiKey = "4MH53GP5D4RCM8NJ";
+var apikey2 = "E763I45M680QQVZB";
 
 module.exports = function(app) {
   // Using the passport.authenticate middleware with our local strategy.
@@ -22,7 +25,30 @@ module.exports = function(app) {
         res.redirect(307, "/api/login");
       })
       .catch(function(err) {
-        res.status(401).json(err);
+        console.log(err);
+      });
+  });
+
+  app.post("/api/stock_name", function (req, res) {
+    db.Stock.create({
+      stockname: req.body.stockname,
+      username: req.body.username,
+      stocknotes: req.body.stocknotes
+    }).then(function () {
+      res.redirect("/members");
+    }).catch(function (err) {
+      console.log(err);
+    });
+  });
+
+  app.get("/api/search_this_stock/:symbol", function (req, res) {
+    var stockUrl = `https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol=${req.params.symbol}&apikey=${apiKey}`;
+    axios.get(stockUrl)
+      .then(function (response) {
+        res.json(response.data);
+      })
+      .catch((Err) => {
+        console.log(Err);
       });
   });
 
@@ -38,12 +64,117 @@ module.exports = function(app) {
       // The user is not logged in, send back an empty object
       res.json({});
     } else {
-      // Otherwise send back the user's email and id
-      // Sending back a password, even a hashed password, isn't a good idea
-      res.json({
-        email: req.user.email,
-        id: req.user.id
+      db.Stock.findAll({
+        where: {
+          username: req.user.email
+        }
+      }).then(function (stockdata) {
+        res.json({
+          email: req.user.email,
+          id: req.user.id,
+          data: stockdata
+        });
       });
     }
   });
+
+  app.get("/api/user/:username", function (req, res) {
+    db.User.findAll({
+      where: {
+        email: req.params.username
+      }
+    })
+      .then(function (data) {
+        let userdetails = data[0].dataValues;
+        res.json(userdetails);
+      }).catch(function (error) {
+        console.error(error);
+      });
+  });
+
+  app.delete("/api/user_data/:stockname", function (req, res) {
+    db.Stock.destroy({
+      where: {
+        stockname: req.params.stockname,
+      }
+    }).then(function (data) {
+      res.json(data);
+    }).catch(function (err) {
+      console.log(err);
+    });
+  });
+
+  app.delete("/api/user_data", function (req, res) {
+    db.Stock.destroy({
+      where: {}
+    })
+      .then(function (data) {
+        res.json(data);
+      }).catch(function (err) {
+        console.log(err);
+      });
+  });
+
+
+  app.delete("/api/user/:username", function (req, res) {
+    db.User.destroy({
+      where: {
+        email: req.params.username,
+      }
+    }).then(function (data) {
+      res.json(data);
+    }).catch(function (err) {
+      console.log(err);
+    });
+  });
+
+  app.put("/api/stock_name", function (req, res) {
+    db.Stock.update({
+      stocknotes: req.body.stocknotes
+    }, {
+        where: {
+          stockname: req.body.stockname
+        }
+      }).then(function (data) {
+        res.json(data);
+      })
+      .catch(function (err) {
+        // Whenever a validation or flag fails, an error is thrown
+        // We can "catch" the error to prevent it from being "thrown", which could crash our node app
+        res.json(err);
+      });
+  });
+
+  app.put("/api/user/notes/:username", function (req, res) {
+    db.User.update({
+      notes: req.body.notes
+    }, {
+        where: {
+          email: req.params.username
+        }
+      }).then(function (data) {
+        res.json(data);
+      })
+      .catch(function (err) {
+        res.json(err);
+      });
+  });
+
+  app.put("/api/user/title/:username", function (req, res) {
+    db.User.update({
+      title: req.body.title
+    }, {
+        where: {
+          email: req.params.username
+        }
+      }).then(function (data) {
+        res.json(data);
+      })
+      .catch(function (err) {
+        res.json(err);
+      });
+  });
+
+
+
 };

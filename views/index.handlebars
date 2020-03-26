@@ -1,0 +1,38 @@
+<nav class="navbar navbar-default">
+    <div class="container-fluid">
+      <div class="navbar-header">
+        <a class="navbar-brand" href="/logout">
+          Logout
+        </a>
+      </div>
+    </div>
+  </nav>
+<h1>Welcome to manager page!</h1>
+<ul>
+  
+    {{#each userlist}}
+    
+    <div><p>{{this}}</p>
+    <button class="view-details">View Details</button> <button class="delete-account">Delete this account</button></div>
+    <p class="account-details"></p>{{/each}}
+  
+</ul>
+
+<br><br>
+
+<p class="user-list"> </p>
+
+<br><br><br>
+
+<form class="create-notes">
+
+     <div class="form-group">
+      <label for="account-notes">Username</label>
+      <input type="text" class="form-control" id="username" placeholder="Username"><br>
+      <label for="account-notes">Account Notes</label><br>
+      <textarea type="text" class="form-control" id="account-notes" placeholder="Account Notes"></textarea>
+    </div>
+
+
+  <button type="submit" id="submit">Submit</button><p>Enter a note that you want to add to this account</p>
+</form>
