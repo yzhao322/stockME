@@ -1,7 +1,6 @@
 {
   "development": {
     "username": "root",
-<<<<<<< Updated upstream
     "password": "password",
     "database": "testdb",
     "host": "127.0.0.1",
@@ -18,10 +17,6 @@
     "username": "root",
     "password": "password",
     "database": "testdb",
-=======
-    "password": "6yq2wwaw",
-    "database": "user_db",
->>>>>>> Stashed changes
     "host": "127.0.0.1",
     "dialect": "mysql"
   }
