@@ -1,9 +1,10 @@
 form.signup,
 form.login {
   margin-top: 50px;
+  width: 100%;
+  text-align: center;
 }
-<<<<<<< Updated upstream
-=======
+
 label{
   font-size: 25px;
 }
@@ -102,4 +103,4 @@ form{
   background: linear-gradient(#1e1e2f, #1e1e24);
   display: block;
 }
->>>>>>> Stashed changes
+
