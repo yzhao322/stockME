@@ -1,4 +1,142 @@
 form.signup,
 form.login {
   margin-top: 50px;
+  width: 100%;
+  text-align: center;
 }
+label{
+  font-size: 25px;
+}
+
+main,
+header,
+nav,
+aside,
+section {
+  display: block;
+}
+
+#email-input,#password-input{
+  text-align: center;
+}
+
+body {
+  margin: 0;
+  font-family: "Poppins", sans-serif;
+  font-size: 0.875rem;
+  font-weight: 400;
+  line-height: 1.5;
+  color: #525f7f;
+  text-align: left;
+  background-color: #1e1e2f;
+  
+}
+
+.navbar{
+  background-color: #1e1e2f;
+}
+
+a,h1,h2,h3,h4,h5,label{
+ 
+  color: #ffffff;
+}
+
+.container {
+  width: 100%;
+  padding-right: 15px;
+  padding-left: 15px;
+  margin-right: auto;
+  margin-left: auto;
+}
+
+.sidebar {
+  float: left;
+  background: #ba54f5;
+  display: block;
+  width: fit-content;
+  box-shadow: 0px 0px 45px 0px rgba(0, 0, 0, 0.6);
+  border-radius: 5px;
+}
+ 
+
+hr {
+  box-sizing: content-box;
+  height: 0;
+  overflow: visible;
+}
+
+
+footer{
+  float:right;
+  width: 100px;
+  padding:15px 15px;
+  font-size:18px;
+  line-height:20px;
+  height:50px;
+  text-align: center;
+}
+
+.logout{
+ 
+  height: 50px;
+  display: inline-block;
+}
+
+.card p {
+  color: rgba(255, 255, 255, 0.8);
+}
+
+form{
+  width: fit-content;
+  display: inline-block;
+}
+
+.btn-adjust{
+  float:right;
+}
+
+.main-panel {
+  position: relative;
+  float:left;
+  width: initial;
+  background: linear-gradient(#1e1e2f, #1e1e24);
+  display: block;
+}
+.dropbtn {
+  background-color: #3498DB;
+  color: white;
+  padding: 16px;
+  font-size: 16px;
+  border: none;
+  cursor: pointer;
+}
+
+.dropbtn:hover, .dropbtn:focus {
+  background-color: #2980B9;
+}
+
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #f1f1f1;
+  min-width: 160px;
+  overflow: auto;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 1;
+}
+
+.dropdown-content a {
+  color: black;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+}
+
+.dropdown a:hover {background-color: #ddd;}
+
+.show {display: block;}
