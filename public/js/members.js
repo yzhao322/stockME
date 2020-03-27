@@ -1,3 +1,5 @@
+// import { parse } from "querystring";
+
 $(document).ready(function () {
   let add = $("form.addup");
   let deleteit = $("form.delete");
@@ -6,7 +8,6 @@ $(document).ready(function () {
   let stocknotes = $("textarea#stock-notes");
   let searchButton = $("form.search");
   let clearAll = $("form.clear-all");
-  let purchasedsymbol = ""
 
   $.get("/api/user_data").then(function (data) {
     $(".member-name").text(data.email);
@@ -15,26 +16,22 @@ $(document).ready(function () {
       $(".search").append($("<p>").text("\nNotes: " + data.data[i].stocknotes));
     }
   }).then(function () {
-    let username = $(".member-name").text();
-    $.get("/api/purchased_stock/" + username).then(function (data) {
-      for (let i = 0; i < data.data.length; i++) {
-        $(".PurchasedStock").append($("<ul>").text("Stock Name: " + data.data[i].purchaseStockName));
-        $(".PurchasedStock").append($("<ul>").text("Stock Purchased Shares: " + data.data[i].purchaseShares));
-        $(".PurchasedStock").append($("<ul>").text("Stock Purchased Price: $" + data.data[i].purchasePrice));
-        $(".PurchasedStock").append($("<ul>").text("Stock Purchased on: " + data.data[i].createdAt.slice(0, 10)));
-        let symbol = data.data[i].purchaseStockName;
-        let purchasedPrice = data.data[i].purchasePrice;
-        getStockData(symbol);
-        showData(symbol, username);
-      }
+    $("#profitOrLoss").on("click", function (event) {
+      event.preventDefault();
+      let username = $(".member-name").text();
+      $.get("/api/purchased_stock/" + username).then(function (data) {
+        for (let i = 0; i < data.data.length; i++) {
+          $(".PurchasedStock").append($("<ul>").text("Stock Name: " + data.data[i].purchaseStockName));
+          $(".PurchasedStock").append($("<ul>").text("Stock Purchased Shares: " + data.data[i].purchaseShares));
+          $(".PurchasedStock").append($("<ul>").text("Stock Purchased Value: $" + data.data[i].purchasePrice));
+          $(".PurchasedStock").append($("<ul>").text("Stock Purchased on: " + data.data[i].createdAt.slice(0, 10)));
+          let shares = parseInt(data.data[i].purchaseShares);
+          let PurchasedValue = parseFloat(data.data[i].purchasePrice);
+          getCurrentStockPrice(data.data[i].purchaseStockName, shares, PurchasedValue);
+        }
+      })
     })
-   
-    console.log(data);
-    for (let i = 0; i < data.data.length; i++) {
-      $(".PurchasedStock").append($("<button>").attr("class", "stock-data").attr("id", `${data.data[i].stockname}`).text(data.data[i].stockname));
-      $(".PurchasedStock").append($("<p>").text("\nNotes: " + data.data[i].stocknotes));
-    }
-  });
+  })
 
   //Add stock name as button into stock search panel
   add.on("submit", function (event) {
@@ -73,34 +70,22 @@ $(document).ready(function () {
     stocknotes.val("");
   });
 
- //clear all stock on stock search panel
+  //clear all stock on stock search panel
   clearAll.on("submit", function (event) {
     event.preventDefault();
     deleteALL();
   })
-  
+
   //send stock to controller and get data back
   searchButton.on("click", ".stock-data", function (event) {
     event.preventDefault();
     let symbol = this.id;
-    getStockData(symbol);
     let username = $(".member-name").text();
-    showData(symbol, username);
-    
+    getStockData(symbol, username);
   });
 
 
-  function getStockData(symbol) {
-    $.get("/api/search_this_stock" + symbol)
-      .then(function () {
-        window.location.replace("/members");
-      })
-      .catch((Err) => {
-        console.log(Err);
-      });
-  }
-
-  function showData(symbol, username) {
+  function getStockData(symbol, username) {
     $.get(`/api/search_this_stock/${symbol}`).then(function (data) {
       $(".info1").text("symbol:  " + data["Global Quote"]["01. symbol"]);
       $(".info2").text("open:  " + data["Global Quote"]["02. open"]);
@@ -124,9 +109,22 @@ $(document).ready(function () {
         let stockname = data["Global Quote"]["01. symbol"];
         addPurchasePrice(price, stockname, username, shares);
         purchaseInput.val("");
-      })
-    });
+      });
+    })
+      .catch((Err) => {
+        console.log(Err);
+      });
   }
+
+  function getCurrentStockPrice(symbol, shares, purchasedValue) {
+    $.get(`/api/search_this_stock/${symbol}`).then(function (data) {
+      let currentPrice = parseFloat(data["Global Quote"]["05. price"]);
+      let currentValues = shares * currentPrice;
+      let spread = purchasedValue - currentValues
+      $(".PurchasedStock").append($("<p>").text("Your Investments on " + symbol + ": $" + spread.toFixed(3)));
+    })
+  }
+
 
 
   function addStock(Name, notes) {
