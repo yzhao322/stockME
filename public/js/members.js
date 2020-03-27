@@ -64,7 +64,10 @@ $(document).ready(function () {
   addNotes.on("submit", function (event) {
     event.preventDefault();
     let notes = stocknotes.val().trim();
-    let stockName = stockname.val().trim();
+    
+    let stockName =  $(".info1").text().slice(9);
+    console.log(stockName);
+
     if (!stockName || !notes) {
       return;
     }
@@ -86,7 +89,7 @@ $(document).ready(function () {
     let username = $(".member-name").text();
     $(".main-panel").css("display","block");
 
- 
+
     getStockData(symbol, username,userNotes);
   });
 
