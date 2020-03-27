@@ -5,16 +5,19 @@ $(document).ready(function () {
   let deleteit = $("form.delete");
   let addNotes = $("form.update-notes");
   let stockname = $("input#stock-input");
-  let stocknotes = $("textarea#stock-notes");
+  let stocknotes = $("textarea#userNotes");
   let searchButton = $("form.search");
   let clearAll = $("form.clear-all");
+  let userNotes = [];
 
   $.get("/api/user_data").then(function (data) {
     $(".member-name").text(data.email);
     for (let i = 0; i < data.data.length; i++) {
       $(".search").append($("<button>").attr("class", "stock-data").attr("id", `${data.data[i].stockname}`).text(data.data[i].stockname));
-      $(".search").append($("<p>").text("\nNotes: " + data.data[i].stocknotes));
+      $(".search").append($("<br>"));
+      userNotes.push({'symbol':data.data[i].stockname,'notes':data.data[i].stocknotes})
     }
+
   }).then(function () {
     $("#profitOrLoss").on("click", function (event) {
       event.preventDefault();
@@ -81,11 +84,14 @@ $(document).ready(function () {
     event.preventDefault();
     let symbol = this.id;
     let username = $(".member-name").text();
-    getStockData(symbol, username);
+    $(".main-panel").css("display","block");
+
+ 
+    getStockData(symbol, username,userNotes);
   });
 
 
-  function getStockData(symbol, username) {
+  function getStockData(symbol, username,userNotes) {
     $.get(`/api/search_this_stock/${symbol}`).then(function (data) {
       $(".info1").text("symbol:  " + data["Global Quote"]["01. symbol"]);
       $(".info2").text("open:  " + data["Global Quote"]["02. open"]);
@@ -102,8 +108,20 @@ $(document).ready(function () {
       $(".purchase").text("Enter shares you want to purchase at this price: ");
       $(".purchase").append(purchaseInput);
       $(".purchase").append(purchaseInputSubmit);
+  
+      for (let i = 0; i < userNotes.length; i++) {
+        if (userNotes[i].symbol === data["Global Quote"]["01. symbol"]) {
+          
+          $("#userNotes").text(userNotes[i].notes);
+ 
+        }
+      }
+
+      
+
       $("form.submitPurchase").on("submit", function (event) {
         event.preventDefault();
+        
         let shares = parseFloat(purchaseInput.val());
         let price = shares * data["Global Quote"]["05. price"];
         let stockname = data["Global Quote"]["01. symbol"];

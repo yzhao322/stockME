@@ -2,7 +2,7 @@
 <html lang="en">
 
 <head>
-  <title>Passport Authentication</title>
+  <title>StockME</title>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootswatch/3.3.7/lumen/bootstrap.min.css">
@@ -10,12 +10,12 @@
 </head>
 
 <body>
-  
-  
-  <nav class="navbar navbar-dark bg-dark">
-    
-  <a > StockME </a>
-    
+
+
+  <nav class="navbar navbar-default" style="text-align: center;">
+
+    <h2>StockME</h2>
+
   </nav>
 
 
@@ -27,37 +27,38 @@
         <hr>
 
         <div class="form-group">
-          <label for="exampleInputEmail1"> <h4>Stock Name</h4></label>
+          <label for="exampleInputEmail1">
+            <h4>Stock Name</h4>
+          </label>
           <input type="text" class="form-control" id="stock-input" placeholder="stock symbol"><br>
-          <label for="stocknotes"> <h4>Stock Notes</h4></label>
-          <textarea type="text" class="form-control" id="stock-notes" placeholder="stock notes"></textarea>
+
 
         </div>
-        <form class="addup" >
+        <form class="addup">
           <button type="submit" class="btn btn-default" id="add">Add</button>
         </form>
-        <form class="delete" >
+        <form class="delete">
           <button type="submit" class="btn btn-default" id="delete">Delete</button>
         </form>
-      
+
         <hr>
 
-        <h4 clh4ss="stock-data">Stock Search<br><br>
+        <h4 class="stock-data">Stock:<br><br>
           <form class="search"></form>
-          
         </h4>
-
-        <form class="update-notes" >
-          <button type="submit" class="btn btn-default " id="update-notes">Update Notes</button>
-        </form>
         <form class="clear-all">
-          <button type="submit" class="btn btn-default" id="clear-all">Clear All</button>
+          <button type="submit" class="btn btn-default" id="clear-all" style="width: 100%;">Clear</button>
         </form>
+
+      <hr>
+
       </div>
 
       <div class="col-md-8 main-panel">
 
-        <div class="stock-info"> <h4>Stock Info</h4></div>
+        <div class="stock-info">
+          <h4>Stock Info</h4>
+        </div>
         <p class="info1"></p>
         <p class="info2"></p>
         <p class="info3"></p>
@@ -69,15 +70,32 @@
         <p class="info9"></p>
         <p class="info10"></p>
         <form class="submitPurchase">
-        <p class="purchase"></p></form>
-      </div>
-      
-      </div>
-      <div class="col-md-2">
+          <p class="purchase"></p>
+        </form>
         <div class="PurchasedStock">Purchased Stock
         </div>
         <button id="profitOrLoss">Profit or Loss</button>
       </div>
+
+      <div class="col-md-2 right-menu">
+
+        <div class="form-group">
+          <label for="stocknotes" class="stocknotes">
+            <h4>Notes</h4>
+          </label>
+          <textarea type="text" class="form-control" id="userNotes" placeholder="stock notes" rows="20"></textarea>
+          <form class="update-notes">
+            <button type="submit" class="btn btn-default " id="update-notes" style="float: initial;">Update Notes</button>
+          </form>
+
+        </div>
+
+      </div>
+
+
+
+
+
     </div>
   </div>
 
@@ -85,11 +103,11 @@
   <footer>
 
     <div class="navbar-header">
-  
+
       <a class="navbar-brand logout" href="/login">
         Logout
       </a>
- 
+
     </div>
 
   </footer>
@@ -97,4 +115,5 @@
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
   <script type="text/javascript" src="js/members.js"></script>
+
 </html>
