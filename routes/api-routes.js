@@ -41,11 +41,25 @@ module.exports = function(app) {
     });
   });
 
+  app.post("/api/stock/purchase_price", function (req, res) {
+    db.StockPurchasedByUser.create({
+      purchaseStockName: req.body.stockname,
+      purchasePrice: req.body.purchasePrice,
+      username: req.body.username,
+      purchaseShares: req.body.shares
+    }).then(function (data) {
+        res.json(data);
+      })
+      .catch(function (err) {
+        res.json(err);
+      });
+  });
+
   app.get("/api/search_this_stock/:symbol", function (req, res) {
     var stockUrl = `https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol=${req.params.symbol}&apikey=${apiKey}`;
     axios.get(stockUrl)
-      .then(function (response) {
-        res.json(response.data);
+      .then(function (data) {
+        res.json(data.data);
       })
       .catch((Err) => {
         console.log(Err);
@@ -89,6 +103,20 @@ module.exports = function(app) {
         res.json(userdetails);
       }).catch(function (error) {
         console.error(error);
+      });
+  });
+
+  app.get("/api/purchased_stock/:username", function(req, res) {
+      db.StockPurchasedByUser.findAll({
+        where: {
+          username: req.params.username
+        }
+      }).then(function (stockdata) {
+        res.json({
+          email: req.user.email,
+          id: req.user.id,
+          data: stockdata
+        });
       });
   });
 
@@ -174,6 +202,7 @@ module.exports = function(app) {
         res.json(err);
       });
   });
+
 
 
 
