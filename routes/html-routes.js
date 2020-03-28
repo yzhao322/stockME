@@ -20,7 +20,7 @@ module.exports = function(app) {
         res.redirect("/master");
       }
     }
-    res.sendFile(path.join(__dirname, "../public/signup.html"));
+    res.sendFile(path.join(__dirname, "../public/index.html"));
   });
 
   app.get("/login", function(req, res) {
