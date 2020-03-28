@@ -5,6 +5,7 @@ $(document).ready(function() {
 
   signUpForm.on("submit", function(event) {
     event.preventDefault();
+    $(".signUpSuccessed").css("display","block");
     var userData = {
       email: emailInput.val().trim(),
       password: passwordInput.val().trim(),
@@ -29,7 +30,8 @@ $(document).ready(function() {
       title: title
     })
       .then(function(data) {
-        window.location.replace("/members");
+        
+        window.location.replace("/signUpSuccess");
       })
       .catch(handleLoginErr(err));
   }
