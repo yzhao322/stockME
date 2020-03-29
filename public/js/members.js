@@ -46,7 +46,6 @@ $(document).ready(function () {
           let PurchasedValue = parseFloat(data.data[i].purchasePrice);
           let purchaseStockName = data.data[i].purchaseStockName;
           let PurchaseDate = data.data[i].createdAt;
-          let spreadArray = [];
           getCurrentStockPrice(purchaseStockName, shares, PurchasedValue, PurchaseDate, i);
           
         }
