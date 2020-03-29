@@ -46,7 +46,8 @@ $(document).ready(function () {
           let PurchasedValue = parseFloat(data.data[i].purchasePrice);
           let purchaseStockName = data.data[i].purchaseStockName;
           let PurchaseDate = data.data[i].createdAt;
-          getCurrentStockPrice(purchaseStockName, shares, PurchasedValue, PurchaseDate);
+          let spreadArray = [];
+          getCurrentStockPrice(purchaseStockName, shares, PurchasedValue, PurchaseDate, i);
           
         }
 
@@ -186,20 +187,18 @@ function getCurrentStockPrice(symbol, shares, purchasedValue,PurchaseDate) {
     let currentPrice = parseFloat(data["Global Quote"]["05. price"]);
     let currentValues = shares * currentPrice;
     let spread = purchasedValue - currentValues;
-
-    $(".inverstments").append($("<p>").text("Your investments on " + symbol + " at " + PurchaseDate.slice(0,10)));
-    $(".inverstments").append($('<p class="spread">').text("$" + spread.toFixed(2)));
-
-    // if (spread = 0) {
-    
-    //   $(".spread").css("color","gray")
-    // } else if (spread < 0){
-    //   $(".spread").css("color","red")
-    // } 
-    // else {
-    //   $(".spread").css("color","green")
-    // }; 
-  
+    if (spread == 0) {
+      $(".inverstments").append($("<p>").text("Your investments on " + symbol + " at " + PurchaseDate.slice(0,10)));
+      $(".inverstments").append($("<p>").attr("class", `spread`).text("$" + spread.toFixed(2)).css("color", "gray"));
+    }
+    else if (spread < 0) {
+      $(".inverstments").append($("<p>").text("Your investments on " + symbol + " at " + PurchaseDate.slice(0,10)));
+      $(".inverstments").append($("<p>").attr("class", `spread`).text("$" + spread.toFixed(2)).css("color", "red"));
+    } 
+    else {
+      $(".inverstments").append($("<p>").text("Your investments on " + symbol + " at " + PurchaseDate.slice(0,10)));
+      $(".inverstments").append($("<p>").attr("class", `spread`).text("$" + spread.toFixed(2)).css("color", "green"));
+    }; 
   })
 }
 
