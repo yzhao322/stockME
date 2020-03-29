@@ -40,9 +40,9 @@ $(document).ready(function () {
           $(".PurchasedStock").append($("<ul>").text("Stock Purchased on: " + data.data[i].createdAt.slice(0, 10)));
           $(".PurchasedStock").append($('<hr class="new">'));
 
-          Purchase +=  parseInt(data.data[i].purchaseShares * data.data[i].purchasePrice);
+          Purchase +=  parseFloat(data.data[i].purchasePrice.toFixed(3)); //purchasePrice in database = buy price x buy shares;
  
-          let shares = parseInt(data.data[i].purchaseShares);
+          let shares = parseInt(data.data[i].purchaseShares); 
           let PurchasedValue = parseFloat(data.data[i].purchasePrice);
           let purchaseStockName = data.data[i].purchaseStockName;
           let PurchaseDate = data.data[i].createdAt;
