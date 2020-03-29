@@ -13,17 +13,29 @@
 
 
   <nav class="navbar navbar-default" style="text-align: center;">
+    <div class="container">
+    <div class="row">
+      <div class="col-sm-10">
+        <h2>StockME</h2>
 
-    <h2>StockME</h2>
-
-    <div class="stock-opration">
-      <form class="submitPurchase">
-        <p class="purchase"></p>
-      </form>
-      <button id="profitOrLoss">Purchase info </button>
-
+        <div class="stock-opration">
+          <form class="submitPurchase form-group">
+            <p class="purchase"></p>
+          </form>
+          <button id="profitOrLoss" class="mybtn">Purchase info </button>
+    
+        </div>
+      </div>
+      <div class="col-sm-2" style="float: right;"> 
+        <h3>
+        <a class="logout" href="/login">
+          Logout
+        </a>
+      </h3>
+      </div>
     </div>
-
+ 
+  </div>
   </nav>
 
 
@@ -131,9 +143,7 @@
 
     <div class="navbar-header">
 
-      <a class="navbar-brand logout" href="/login">
-        Logout
-      </a>
+
 
     </div>
 

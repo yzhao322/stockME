@@ -1,38 +1,80 @@
 <nav class="navbar navbar-default">
-    <div class="container-fluid">
-      <div class="navbar-header">
-        <a class="navbar-brand" href="/logout">
-          Logout
-        </a>
-      </div>
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <a class="navbar-brand" href="/logout">
+        Logout
+      </a>
     </div>
-  </nav>
-<h1>Welcome to manager page!</h1>
-<ul>
-  
-    {{#each userlist}}
-    
-    <div><p>{{this}}</p>
-    <button class="view-details">View Details</button> <button class="delete-account">Delete this account</button></div>
-    <p class="account-details"></p>{{/each}}
-  
-</ul>
+  </div>
+</nav>
 
-<br><br>
-
-<p class="user-list"> </p>
-
-<br><br><br>
-
-<form class="create-notes">
-
-     <div class="form-group">
-      <label for="account-notes">Username</label>
-      <input type="text" class="form-control" id="username" placeholder="Username"><br>
-      <label for="account-notes">Account Notes</label><br>
-      <textarea type="text" class="form-control" id="account-notes" placeholder="Account Notes"></textarea>
+<div class="container jumbotron" style="text-align: center;">
+  <div class="row">
+    <h1>Welcome to manager page!</h1>
+    <hr>
+  </div>
+  <div class="row">
+    <div class="col-md-3 sideBar">
+      <ul>
+        {{#each userlist}}
+        <div>
+          <p>{{this}}</p>
+          <button class="view-details">View Details</button> <button class="delete-account">Delete this
+            account</button>
+        </div>
+        <p class="account-details"></p>{{/each}}
+      </ul>
     </div>
 
 
-  <button type="submit" id="submit">Submit</button><p>Enter a note that you want to add to this account</p>
-</form>
+    <div class="col-md-6 main-panel">
+
+
+      <br><br>
+      <p id="selectedUser"></p>
+      <h3 id="username"></h3>
+
+      <p class="user-list">Please select a user</p>
+
+
+
+      <hr>
+    </div>
+
+    <div class="col-md-3 notePanel">
+      <form class="create-notes">
+        <div class="form-group">
+          <p>
+            <label for="account-notes">Username</label>
+            <input type="text" class="form-control" id="usernameByInput" placeholder="Username"
+              style="text-align: center;"></input>
+
+              <span class="hint" style="font-size: 15px;"><span style="color:red">Caution!</span><span> You are updating this user</span></span>
+           
+          </p>
+          <p>
+            <label for="account-notes">Account Notes</label><br>
+            <textarea type="text" class="form-control" id="account-notes" placeholder="Account Notes"
+              style="text-align: center;"></textarea>
+          </p>
+
+        </div>
+        <button type="submit" class="btn btn-default submit"  id="submit" style="width: 100%;">Submit</button>
+        <p id="addNoteMsg"></p>
+      </form>
+    </div>
+
+  </div>
+
+ <div id="myModal" class="modal">
+
+  <!-- Modal content -->
+  <div class="modal-content">
+    <div class="modal-header">
+      <span class="close">&times;</span>
+      <h2>Successed!</h2>
+    </div>
+  </div>
+
+</div>
+</div>
