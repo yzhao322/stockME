@@ -33,7 +33,6 @@ module.exports = function(app) {
     db.Stock.create({
       stockname: req.body.stockname,
       username: req.body.username,
-      stocknotes: req.body.stocknotes
     }).then(function () {
       res.redirect("/members");
     }).catch(function (err) {
@@ -86,7 +85,7 @@ module.exports = function(app) {
         res.json({
           email: req.user.email,
           id: req.user.id,
-          data: stockdata
+          data: stockdata 
         });
       });
     }
