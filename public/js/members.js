@@ -54,7 +54,7 @@ $(".searching-stock").hide();
   $.get("/api/user_data").then(function (data) {
     $(".member-name").text(data.email);
     for (let i = 0; i < data.data.length; i++) {
-        $(".stock-button").append($("<button>").attr("class", "search-buttton").attr("id", `${data.data[i].stockname}`).text(data.data[i].stockname));
+        $(".stock-button").append($("<button>").attr("class", "search-buttton").attr("id", `${data.data[i].stockname}`).text(data.data[i].stockname.toUpperCase()).css("border-radius","6px"));
         $("form.search").append($("<p>").text(data.data[i].stockname.toUpperCase()));
         $("form.search").append($("<br>"));
         userNotes.push({ 'symbol': data.data[i].stockname, 'notes': data.data[i].stocknotes })
@@ -182,6 +182,7 @@ function getStockData(symbol, username, userNotes) {
 
     $("form.submitPurchase").on("submit", function (event) {
       event.preventDefault();
+      alert("success");
       $(".welcome").css("display","block");
       let shares = parseFloat(purchaseInput.val());
       let price = shares * data["Global Quote"]["05. price"];
