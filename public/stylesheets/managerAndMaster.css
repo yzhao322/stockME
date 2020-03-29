@@ -36,6 +36,7 @@ h1 {
     border-radius: 5px;
     margin: 3px;
     float: right;
+    margin-bottom: 3px;
 }
 
 .modal {
@@ -86,4 +87,26 @@ h1 {
     color: #000;
     text-decoration: none;
     cursor: pointer;
+}
+
+.list-group {
+    display: inline-block;
+    text-align: center;
+}
+
+.greenbtn {
+    font: 1em sans-serif;
+    color: white;
+    border-radius: 4px;
+    text-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);
+    background: rgb(28, 184, 65);
+}
+
+.orangebtn {
+    font: 1em sans-serif;
+    color: white;
+    border-radius: 4px;
+    text-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);
+    background: rgb(223, 117, 20);
+    /* this is an orange */
 }
