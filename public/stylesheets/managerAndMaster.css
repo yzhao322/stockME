@@ -1,0 +1,22 @@
+body {
+    margin: 0;
+    font-family: "Poppins", sans-serif;
+    font-weight: 400;
+    line-height: 1.5;
+    color: #525f7f;
+    text-align: left;
+    background-color: #1e1e2f;
+  }
+
+  h1{
+      color: rgb(139, 143, 143);
+  }
+
+.view-details, .delete-account{
+    background-color: white;
+    color: black;
+    border: 2px solid #525f7f;
+    border-radius: 5px;
+    margin: 3px;
+    float:right;
+}

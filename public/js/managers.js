@@ -1,3 +1,5 @@
+
+
 $(document).ready(function () {
     const viewDetails = $(".view-details");
     const deleteAccount = $(".delete-account");
@@ -6,13 +8,29 @@ $(document).ready(function () {
     const account = $("input#usernameByInput");
     const upgrade = $("form.upgrade");
     const degrade = $("form.degrade");
-    const usernameAutoFill = $("p.user-name");
 
     var username;
     var username2;
    
 
-    $("span").hide();
+    // $("span").hide();
+    $(".user-list-info").hide();
+    $("li#user-list-info").click(function (event) {
+        event.preventDefault();
+        $('.user-list-info').toggle("slide");
+    });
+    
+    $(".account-management").hide();
+    $("li#account-management").click(function (event) {
+        event.preventDefault();
+        $('.account-management').toggle("slide");
+    });
+    
+    $("form.notePanel").hide();
+    $("li#notePanel").click(function (event) {
+        event.preventDefault();
+        $('form.notePanel').toggle("slide");
+    });
 
     account.on("click", function (event) {
         event.preventDefault();
@@ -22,13 +40,15 @@ $(document).ready(function () {
 
     viewDetails.on("click", function (event) {
         event.preventDefault();
-        let username = this.parentElement.querySelector("p").textContent;
+        let username = this.name;
         getDetail(username);
+        $("input.form-control").text((this.name)).attr("placeholder", this.name);
+
     });
 
     deleteAccount.on("click", function (event) {
         event.preventDefault();
-        let username = this.parentElement.querySelector("p").textContent;
+        let username = this.name;
         deleteThisAccount(username);
     });
 
@@ -65,11 +85,6 @@ $(document).ready(function () {
         let username = this.name;
         degradeToMember(username);
     });
-
-    usernameAutoFill.on("click", function (event) {
-        event.preventDefault();
-        $("input.form-control").text((this.textContent)).attr("placeholder", this.textContent);
-    })
 
     function getDetail(username) {
         $.get("/api/user/" + username).then(function (data) {

@@ -1,47 +1,37 @@
-<nav class="navbar navbar-default">
-  <div class="container-fluid">
-    <div class="navbar-header">
-      <a class="navbar-brand" href="/logout">
-        Logout
-      </a>
-    </div>
-  </div>
-</nav>
+<div class="bg-info clearfix"></div>
+    <h1 style="text-align: center">Welcome to Manager Page!</h1><hr>
+</div>
 
-<div class="container jumbotron" style="text-align: center;">
-  <div class="row">
-    <h1>Welcome to manager page!</h1>
-    <hr>
-  </div>
-  <div class="row">
-    <div class="col-md-3 sideBar">
-      <ul>
-        {{#each userlist}}
-        <div>
-          <p class="user-name">{{this}}</p>
-          <button class="view-details">View Details</button> <button class="delete-account">Delete this
-            account</button>
-        </div>
-        <p class="account-details"></p>{{/each}}
-      </ul>
-    </div>
+<ul class="nav">
+  <li class="nav-item" id="user-list-info">
+    <a class="nav-link active">User List</a>
+  </li>
 
+<form class="user-list-info">
+<ul class="list-group">
+  {{#each userlist}}
+  <li class="list-group-item">{{this}}<button class="view-details" name="{{this}}">View Details</button></li>
+  {{/each}}
+</ul>
+</form>
 
-    <div class="col-md-6 main-panel">
+  <li class="nav-item" id="account-management">
+    <a class="nav-link">Administrative Accounts</a>
+  </li>
+<form class="account-management">
+<ul class="list-group">
+  {{#each userlist}}
+  <li class="list-group-item">{{this}}<button class="delete-account" name="{{this}}">Delete this
+            account</button></li>
+  {{/each}}
+</ul>
+</form>
 
-
-      <br><br>
-      <p id="selectedUser"></p>
-      <h3 id="username"></h3>
-
-      <p class="user-list">Please select a user</p>
-
-
-
-      <hr>
-    </div>
-
-    <div class="col-md-3 notePanel">
+  <li class="nav-item" id="notePanel">
+    <a class="nav-link" >Adding Notes</a>
+  </li>
+   <form class="notePanel">
+    <div class="col-md-12 notePanel">
       <form class="create-notes">
         <div class="form-group">
           <p>
@@ -63,8 +53,45 @@
         <p id="addNoteMsg"></p>
       </form>
     </div>
-
+   <br><br>
   </div>
+</form>
+
+
+
+
+
+
+
+    <div class="row">
+    <div class="col-md-1 sideBar">
+      {{!-- <ul>
+        {{#each userlist}}
+        <div>
+          <p class="user-name">{{this}}</p>
+          <button class="view-details">View Details</button> <button class="delete-account">Delete this
+            account</button>
+        </div>
+        <p class="account-details"></p>{{/each}}
+      </ul> --}}
+    </div>
+
+
+    <div class="col-md-9 main-panel">
+
+
+      <br><br>
+      <p id="selectedUser"></p>
+      <h3 id="username"></h3>
+
+      <p class="user-list">Please select a user</p>
+
+
+
+      <hr>
+    </div>
+
+
 
  <div id="myModal" class="modal">
 
@@ -78,3 +105,8 @@
 
 </div>
 </div>
+
+  <li class="nav-item">
+    <a class="nav-link disabled" href="/login" tabindex="-1" aria-disabled="true">Log Out</a>
+  </li>
+</ul>
