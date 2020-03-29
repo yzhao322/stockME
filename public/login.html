@@ -12,7 +12,7 @@
 <body>
   <nav class="navbar navbar-default" style="text-align: center;">
 
-    <h2>Log in</h2>
+    <h2 style="font-family: 'Times New Roman', Times, serif; font-size: 50px">Log In</h2>
 
   </nav>
   <div class="container">
@@ -24,31 +24,29 @@
         <form class="login">
           <div class="form-group">
             <label for="exampleInputEmail1">Email address</label>
-            <input type="email" class="form-control" style="text-align: center;" id="email-input">
+            <input type="email" class="form-control" style="text-align: center;" id="email-input" placeholder="Email">
           </div>
           <div class="form-group">
             <label for="exampleInputPassword1">Password</label>
             <input type="password" class="form-control" id="password-input">
           </div>
-
           <div class="form-group" style="display: none;">
-            <label for="title">Title :</label>
-            </br>
-            <select name="title" id="selector" style="font-size: 20px;">
-              <option value="member">Member</option>
-              <option value="manager">Manager</option>
-              <option value="manager">Master</option>
-            </select>
-
-          </div>
+              <label for="title">Title :</label>
+              </br>
+              <select name="title" id="selector" style="font-size: 20px;">
+                <option value="member">Member</option>
+                <option value="manager">Manager</option>
+                <option value="manager">Master</option>
+              </select>
+            </div>
+          <br>
 
           <button type="submit" class="btn btn-default"
-            style="width: 100%; background-color: aquamarine;">Login</button>
+            style="width: 100%; background-color: rgb(31, 94, 83); color: azure;">Login</button>
 
         </form>
-        <br />
-
-        <h4 style="text-align: center;">Or sign up <a id="clickMe" href="/signup">here</a></h4>
+        <br><br><br><hr>
+        <h4 style="font-size: 15px">Or Sign Up <a id="clickMe" href="/signup" class="redirectAccess">Here</a></h4>
       </div>
     </div>
   </div>
