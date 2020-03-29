@@ -13,6 +13,7 @@ $(document).ready(function () {
     var username2;
    
 
+    $("span").hide();
     //styling pages
     $("span").hide();
     
@@ -159,13 +160,13 @@ $(document).ready(function () {
 var modal = document.getElementById("myModal");
 
 // Get the button that opens the modal
-var btn = document.getElementsByClassName("submit")[0];
+var btn = document.getElementById("submit");
 
 // Get the <span> element that closes the modal
 var span = document.getElementsByClassName("close")[0];
 
 // When the user clicks the button, open the modal 
-btn.onclick = function(username,username2) { 
+btn.onclick = function() { 
   modal.style.display = "block";
 }
 
