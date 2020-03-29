@@ -6,7 +6,8 @@ body {
     color: #525f7f;
     text-align: left;
     background-color: #1e1e2f;
-  }
+    margin: 60px;
+}
 
   h1{
       color: rgb(139, 143, 143);
