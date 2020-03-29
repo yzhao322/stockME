@@ -4,7 +4,6 @@ form.login {
   width: 100%;
   text-align: center;
 }
-
 label{
   font-size: 25px;
 }
@@ -24,7 +23,6 @@ section {
 body {
   margin: 0;
   font-family: "Poppins", sans-serif;
-  font-size: 0.875rem;
   font-weight: 400;
   line-height: 1.5;
   color: #525f7f;
@@ -66,6 +64,10 @@ hr {
   overflow: visible;
 }
 
+hr.new {
+  border-top: 1px dotted gray;
+}
+
 
 footer{
   float:right;
@@ -78,8 +80,9 @@ footer{
 }
 
 .logout{
- 
+  color: #fff;
   height: 50px;
+
   display: inline-block;
 }
 
@@ -95,12 +98,191 @@ form{
 .btn-adjust{
   float:right;
 }
+/* main-panel */
 
 .main-panel {
   position: relative;
   float:left;
-  width: initial;
+  width: 46%;
   background: linear-gradient(#1e1e2f, #1e1e24);
+  display: block;
+  margin-left: 100px;
+  
+}
+
+.welcome{
+  display: block;
+  text-align: center;
+}
+
+.stock-info{
+  font-size: 25px;
+  display: none;
+}
+.stock-purchasedHistory{
+  display: none;
+}
+
+.inverstments-panel{
+  
+  display: none;
+}
+
+
+.right-menu{
+  float: right;
+  width: 30%;
+
+}
+.stock-opration{
+  display: none;
+  
+}
+
+button{
+  margin: 2.5px 2.5px 2.5px 2.5px;
+}
+
+.profitForm{
+  width: 100%;
+  max-height: 500px;
+  overflow-y: scroll;
   display: block;
 }
 
+.inverstments{
+  
+  max-height: 250px;
+  overflow-y: scroll;
+  
+
+}
+.form-margin {
+  margin-top: 2px;
+  margin-bottom: 2px;
+}
+
+.signUpSuccessed{
+  display: none;
+}
+
+h1.ml8 {
+  font-weight: 900;
+  font-size: 4.5em;
+  color: #fff;
+  width: 3em;
+  height: 3em;
+}
+
+.ml8 .letters-container {
+  position: absolute;
+  left: 0;
+  right: 0;
+  margin: auto;
+  top: 0;
+  bottom: 0;
+  height: 1em;
+}
+
+.ml8 .letters {
+  position: relative;
+  z-index: 2;
+  display: inline-block;
+  line-height: 0.7em;
+  right: -0.12em;
+  top: -0.2em;
+}
+
+.ml8 .bang {
+  font-size: 1.4em;
+  top: auto;
+  left: -0.06em;
+}
+
+.ml8 .circle {
+  position: absolute;
+  left: 0;
+  right: 0;
+  margin: auto;
+  top: 0;
+  bottom: 0;
+}
+
+.ml8 .circle-white {
+  width: 3em;
+  height: 3em;
+  border: 2px dashed white;
+  border-radius: 2em;
+}
+
+.ml8 .circle-dark {
+  width: 2.2em;
+  height: 2.2em;
+  background-color: #4f7b86;
+  border-radius: 3em;
+  z-index: 1;
+}
+
+.ml8 .circle-dark-dashed {
+  border-radius: 2.4em;
+  background-color: transparent;
+  border: 2px dashed #4f7b86;
+  width: 2.3em;
+  height: 2.3em;
+}
+
+.container-full{
+  width: 100%;
+  height: 100%;
+  text-align: center;
+}
+
+select {
+  display: inline-block;
+  text-align: center;
+  height: calc(1.5em + 0.75rem + 2px);
+  padding: 0.375rem 0.75rem;
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1.5;
+  color: #495057;
+  background-color: #fff;
+  background-clip: padding-box;
+  border: 1px solid #ced4da;
+  border-radius: 0.25rem;
+}
+
+.notePanel{
+  display: none;
+  float: left;
+
+}
+
+.hint{
+  font-size: 5px;
+}
+
+.mybtn {
+	box-shadow:inset 0px 1px 0px 0px #efdcfb;
+	background:linear-gradient(to bottom, #dfbdfa 5%, #bc80ea 100%);
+	background-color:#dfbdfa;
+	border-radius:6px;
+	border:1px solid #c584f3;
+	display:inline-block;
+	cursor:pointer;
+	color:#ffffff;
+	font-family:Arial;
+	font-size:12px;
+	font-weight:bold;
+	padding:6px 24px;
+	text-decoration:none;
+	text-shadow:0px 1px 0px #9752cc;
+}
+.mybtn:hover {
+	background:linear-gradient(to bottom, #bc80ea 5%, #dfbdfa 100%);
+	background-color:#bc80ea;
+}
+.mybtn:active {
+	position:relative;
+	top:1px;
+}

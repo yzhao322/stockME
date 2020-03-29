@@ -5,9 +5,9 @@ var db = require("../models");
 // Requiring our custom middleware for checking if a user is logged in
 var isAuthenticated = require("../config/middleware/isAuthenticated");
 
-module.exports = function(app) {
+module.exports = function (app) {
 
-  app.get("/", function(req, res) {
+  app.get("/", function (req, res) {
     // If the user already has an account send them to the members page
     if (req.user) {
       if (req.body.title === "Member") {
@@ -20,10 +20,15 @@ module.exports = function(app) {
         res.redirect("/master");
       }
     }
+    res.sendFile(path.join(__dirname, "../public/index.html"));
+  });
+
+  app.get("/signup", function (req, res) {
+
     res.sendFile(path.join(__dirname, "../public/signup.html"));
   });
 
-  app.get("/login", function(req, res) {
+  app.get("/login", function (req, res) {
     // If the user already has an account send them to the members page
     if (req.user) {
       if (req.body.title === "Member") {
@@ -36,16 +41,23 @@ module.exports = function(app) {
         res.redirect("/master");
       }
     }
-    res.sendFile(path.join(__dirname, "../public/login.html"));
+    res.sendFile(path.join(__dirname, "../public/index.html"));
+  });
+
+  app.get("/signUpSuccess", function (req, res) {
+
+    res.sendFile(path.join(__dirname, "../public/signUpSuccess.html"));
+
   });
 
   // Here we've add our isAuthenticated middleware to this route.
   // If a user who is not logged in tries to access this route they will be redirected to the signup page
-  app.get("/members", isAuthenticated, function(req, res) {
+  app.get("/members", isAuthenticated, function (req, res) {
     res.sendFile(path.join(__dirname, "../public/members.html"));
   });
 
   app.get("/managers", isAuthenticated, function (req, res) {
+
     db.User.findAll({
       where: {
         title: "Member"
@@ -53,14 +65,17 @@ module.exports = function(app) {
     })
       .then(function (data) {
         let userList = [];
-        for (let i = 0; i < data.length; i++){
-            userList.push(data[i].dataValues.email)
+        for (let i = 0; i < data.length; i++) {
+          userList.push(data[i].dataValues.email)
         }
         res.render("index", { userlist: userList });
       }).catch(function (error) {
         console.error(error);
       })
   });
+
+
+
   app.get("/master", isAuthenticated, function (req, res) {
     db.User.findAll({
       where: {
@@ -70,7 +85,7 @@ module.exports = function(app) {
       .then(function (data) {
         let usermember = [];
         let usermanager = [];
-        for (let i = 0; i < data.length; i++){
+        for (let i = 0; i < data.length; i++) {
           if (data[i].dataValues.title === "Member") {
             usermember.push(data[i].dataValues);
           }
@@ -78,8 +93,8 @@ module.exports = function(app) {
             usermanager.push(data[i].dataValues);
           }
         }
-      
-        res.render("master", { usermember: usermember, usermanager:usermanager });
+
+        res.render("master", { usermember: usermember, usermanager: usermanager });
       }).catch(function (error) {
         console.error(error);
       })
