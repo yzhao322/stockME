@@ -4,7 +4,7 @@ module.exports = function(sequelize, DataTypes) {
     stockname: {
       type: DataTypes.STRING,
       allowNull: false,
-      unique: true
+      unique: false
     },
     username: {
       type: DataTypes.STRING,
