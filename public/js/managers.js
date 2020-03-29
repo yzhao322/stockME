@@ -15,6 +15,8 @@ $(document).ready(function () {
 
     $("span").hide();
     //styling pages
+    $("span").hide();
+    
     $(".user-list-info").hide();
     $("li#user-list-info").click(function (event) {
         event.preventDefault();
