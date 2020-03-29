@@ -6,6 +6,7 @@ $(document).ready(function () {
     const account = $("input#usernameByInput");
     const upgrade = $("form.upgrade");
     const degrade = $("form.degrade");
+    const usernameAutoFill = $("p.user-name");
 
     var username;
     var username2;
@@ -53,6 +54,7 @@ $(document).ready(function () {
         
     });
 
+
     upgrade.on("submit", function (event) {
         event.preventDefault();
         let username = this.name;
@@ -63,6 +65,11 @@ $(document).ready(function () {
         let username = this.name;
         degradeToMember(username);
     });
+
+    usernameAutoFill.on("click", function (event) {
+        event.preventDefault();
+        $("input.form-control").text((this.textContent)).attr("placeholder", this.textContent);
+    })
 
     function getDetail(username) {
         $.get("/api/user/" + username).then(function (data) {
