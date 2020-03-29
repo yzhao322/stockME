@@ -30,7 +30,7 @@ $(document).ready(function () {
       let username = $(".member-name").text();
       
       $.get("/api/purchased_stock/" + username).then(function (data) {
-        console.log(data.data.length);
+        
         $(".PurchasedStock").text("");
         $(".totalInvestment").text("");
         for (let i = 0; i < data.data.length; i++) {
@@ -47,6 +47,7 @@ $(document).ready(function () {
           let purchaseStockName = data.data[i].purchaseStockName;
           let PurchaseDate = data.data[i].createdAt;
           getCurrentStockPrice(purchaseStockName, shares, PurchasedValue, PurchaseDate);
+          
         }
 
         $(".totalInvestment").append($("<p>").text("Total investment " + ": $ " + Purchase));
@@ -148,7 +149,7 @@ function getStockData(symbol, username, userNotes) {
     $(".info9").text("change:  " + data["Global Quote"]["09. change"]);
     $(".info10").text("change percent:  " + data["Global Quote"]["10. change percent"]);
     let purchaseInput = $("<input>");
-    let purchaseInputSubmit = $("<button>").text("submit");
+    let purchaseInputSubmit = $('<button class="mybtn">').text("submit");
     $(".purchase").text("Enter shares you want to purchase at this price: ");
     $(".purchase").append(purchaseInput);
     $(".purchase").append(purchaseInputSubmit);
@@ -189,15 +190,15 @@ function getCurrentStockPrice(symbol, shares, purchasedValue,PurchaseDate) {
     $(".inverstments").append($("<p>").text("Your investments on " + symbol + " at " + PurchaseDate.slice(0,10)));
     $(".inverstments").append($('<p class="spread">').text("$" + spread.toFixed(2)));
 
-    if (spread = 0) {
+    // if (spread = 0) {
     
-      $(".spread").css("color","gray")
-    } else if (spread < 0){
-      $(".spread").css("color","red")
-    } 
-    else {
-      $(".spread").css("color","green")
-    }; 
+    //   $(".spread").css("color","gray")
+    // } else if (spread < 0){
+    //   $(".spread").css("color","red")
+    // } 
+    // else {
+    //   $(".spread").css("color","green")
+    // }; 
   
   })
 }
