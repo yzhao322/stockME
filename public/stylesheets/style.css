@@ -306,3 +306,7 @@ select {
     background-color: #5b8a80;
     border-radius: 6px;
 }
+
+.red {
+    color: red;
+}
