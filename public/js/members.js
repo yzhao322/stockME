@@ -65,7 +65,7 @@ $(document).ready(function() {
             userNotes.push({ 'symbol': data.data[i].stockname, 'notes': data.data[i].stocknotes })
         }
     }).then(function() {
-        $("#profitOrLoss").on("click", function(event) {
+        $("li#investments").one("click", function(event) {
             event.preventDefault();
             $(".inverstments-panel").css("display", "block");
             let username = $(".member-name").text();
