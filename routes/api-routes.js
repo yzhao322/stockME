@@ -178,7 +178,8 @@ module.exports = function(app) {
                 stocknotes: req.body.stocknotes
             }, {
                 where: {
-                    stockname: req.body.stockname
+                    stockname: req.body.stockname,
+                    username: req.body.username
                 }
             }).then(function(data) {
                 res.json(data);

@@ -136,15 +136,12 @@ $(document).ready(function() {
         $(".stock-opration").css("display", "none");
         $(".inverstments-panel").css("display", "none");
         let notes = stocknotes.val().trim();
-
+        let username = $(".member-name").text();
         let stockName = $(".notes-stocknames :selected").text();
-        alert(stockName);
-
-
         if (!stockName || !notes) {
             return;
         }
-        updateStockNotes(notes, stockName);
+        updateStockNotes(notes, stockName, username);
         stockname.val("");
         stocknotes.val("");
     });
@@ -208,7 +205,6 @@ function getStockData(symbol, username) {
 
         $("form.submitPurchase").on("submit", function(event) {
             event.preventDefault();
-            alert("success");
             $(".welcome").css("display", "block");
             let shares = parseFloat(purchaseInput.val());
             let price = shares * data["Global Quote"]["05. price"];
@@ -318,11 +314,11 @@ function deleteALL(username) {
 
 }
 
-function updateStockNotes(notes, stockName) {
+function updateStockNotes(notes, stockName, username) {
     $.ajax({
             method: "PUT",
             url: "/api/stock_name",
-            data: { stocknotes: notes, stockname: stockName }
+            data: { stocknotes: notes, stockname: stockName, username:username }
         })
         .then(function() {
             $("#modalMsg").text(notes + " has been added to " + stockName);
