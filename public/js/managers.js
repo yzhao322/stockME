@@ -13,7 +13,7 @@ $(document).ready(function () {
     var username2;
    
 
-    $("span").hide();
+  
     //styling pages
     $("span").hide();
     
