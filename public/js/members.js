@@ -53,7 +53,7 @@ $(document).ready(function() {
 
     $.get("/api/user_data").then(function(data) {
         $(".member-name").text(data.email);
-        console.log(data);
+        // console.log(data);
         for (let i = 0; i < data.data.length; i++) {
             $(".stock-button").append($("<button>").attr("class", "search-buttton").attr("id", `${data.data[i].stockname}`).text(data.data[i].stockname.toUpperCase()).css("border-radius", "6px"));
             $(".notes-stocknames").append($("<option>").text(data.data[i].stockname.toUpperCase()).css("border-radius", "6px"));
@@ -281,18 +281,20 @@ function deleteStock(Name) {
 }
 
 function deleteALL(username) {
+
     $.ajax({
             method: "DELETE",
             url: "/api/user_data/all/" + username
         })
-        .then(function() {
-            alert("All stocks deleted successfully");
+        .then(setInterval(() => {
+
             window.location.replace("/members");
-        })
-        .catch((Err) => {
-            alert("Sorry! Support team is on the way! - (Error code: E-MEM-02");
-            console.log(Err);
-        })
+            alert("All stocks deleted successfully");
+        }), 1000).catch((Err) => {
+            alert("Sorry! Support team is on the way! - (Error code: E-MEM-02)");
+            console.log(Err);;
+        });
+
 }
 
 function updateStockNotes(notes, stockName) {
