@@ -132,9 +132,17 @@ module.exports = function(app) {
     });
   });
 
-  app.delete("/api/user_data", function (req, res) {
+  app.delete("/api/user_data/all/:username", function (req, res) {
     db.Stock.destroy({
-      where: {}
+      where: {
+        username: req.params.username
+      }
+    }).then(function () {
+      db.StockPurchasedByUser.destroy({
+        where: {
+          username: req.params.username
+        }
+      })
     })
       .then(function (data) {
         res.json(data);
