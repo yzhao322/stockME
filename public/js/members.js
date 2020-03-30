@@ -1,5 +1,6 @@
 // import { parse } from "querystring";
-
+var modal = document.getElementById("myModal");
+var span = document.getElementsByClassName("close")[0];
 
 
 $(document).ready(function() {
@@ -13,6 +14,7 @@ $(document).ready(function() {
     let clearAll = $("form.clear-all");
     let userNotes = [];
     let Purchase = 0;
+
 
     //styling page
     $(".manage-options").hide();
@@ -157,7 +159,7 @@ $(document).ready(function() {
 
     function confirmClearAll(username) {
         if (confirm("Are you sure to delete all?")) {
-            deleteALL(username);
+            setTimeout(deleteALL(username), 1000);
         }
         return false;
     }
@@ -171,6 +173,18 @@ $(document).ready(function() {
         $(".stock-opration").css("display", "block");
         getStockData(symbol, username);
     });
+
+    //modal windows
+    span.onclick = function() {
+        modal.style.display = "none";
+        window.location.replace("/members");
+    }
+    window.onclick = function(event) {
+        if (event.target == modal) {
+            modal.style.display = "none";
+            window.location.replace("/members");
+        }
+    }
 
 })
 
@@ -238,8 +252,9 @@ function addStock(Name) {
             username: $(".member-name").text(),
         })
         .then(function() {
-            alert(Name + " is added successfully");
-            window.location.replace("/members");
+            $("#modalMsg").text(Name + " has been added!");
+            $(".modal-header").css("background-color", "green");
+            modal.style.display = "block";
 
         })
         .catch((Err) => {
@@ -256,8 +271,11 @@ function addPurchasePrice(price, stockname, username, shares) {
             shares: shares
         })
         .then(function() {
-            alert("Stored purchases!");
-            window.location.replace("/members");
+
+            $("#modalMsg").text("You have stored " + shares + " shares of " +
+                stockname + " for a total amount of $" + price);
+            $(".modal-header").css("background-color", "green");
+            modal.style.display = "block";
         })
         .catch((Err) => {
             alert("Sorry! Support team is on the way! - (Error code: E-MEM-04");
@@ -271,8 +289,10 @@ function deleteStock(Name) {
             url: "/api/user_data/" + Name
         })
         .then(function() {
-            alert(Name + " deleted successfully");
-            window.location.replace("/members");
+
+            $("#modalMsg").text(Name + " deleted successfully");
+            $(".modal-header").css("background-color", "green");
+            modal.style.display = "block";
         })
         .catch((Err) => {
             alert("Sorry! Support team is on the way! - (Error code: E-MEM-03");
@@ -286,11 +306,12 @@ function deleteALL(username) {
             method: "DELETE",
             url: "/api/user_data/all/" + username
         })
-        .then(setInterval(() => {
+        .then(setTimeout(() => {
 
             window.location.replace("/members");
-            alert("All stocks deleted successfully");
-        }), 1000).catch((Err) => {
+            alert("All stock have been deleted.")
+        }), 1000)
+        .catch((Err) => {
             alert("Sorry! Support team is on the way! - (Error code: E-MEM-02)");
             console.log(Err);;
         });
@@ -304,7 +325,9 @@ function updateStockNotes(notes, stockName) {
             data: { stocknotes: notes, stockname: stockName }
         })
         .then(function() {
-            window.location.replace("/members");
+            $("#modalMsg").text(notes + " has been added to " + stockName);
+            $(".modal-header").css("background-color", "green");
+            modal.style.display = "block";
         })
         .catch((Err) => {
             alert("Sorry! Support team is on the way! - (Error code: E-MEM-01");

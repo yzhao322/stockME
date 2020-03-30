@@ -11,8 +11,6 @@ $(document).ready(function() {
     // Get the button that opens the modal
     var addNotebtn = $("#submit");
 
-    // Get the <span> element that closes the modal
-    var span = document.getElementsByClassName("close")[0];
 
     //styling pages
     $("span").hide();
@@ -59,10 +57,12 @@ $(document).ready(function() {
 
 
         if (username) {
+            $(".modal-header").css("background-color", "#5cb85c");
             document.getElementById("addNoteMsg").textContent = "You have updated notes to ：" + username;
             addNotesTo(username, notes);
             modal.style.display = "block";
         } else if (username2) {
+            $(".modal-header").css("background-color", "#5cb85c");
             document.getElementById("addNoteMsg").textContent = "You have updated notes to ： " + username2;
             addNotesTo(username2, notes);
             modal.style.display = "block";
@@ -70,8 +70,6 @@ $(document).ready(function() {
         } else {
             alert("Nothing is selected")
         }
-
-
 
     });
 
@@ -81,6 +79,9 @@ $(document).ready(function() {
         event.preventDefault();
         let username = this.name;
         deleteThisAccount(username);
+        $(".modal-header").css("background-color", "orange");
+        document.getElementById("addNoteMsg").textContent = username + " has been deleted!!!";
+        modal.style.display = "block";
     });
 
 
@@ -118,25 +119,9 @@ $(document).ready(function() {
                 method: "DELETE",
                 url: "/api/user/" + username
             })
-            .then(function() {
-                window.location.replace("/managers");
-            })
             .catch((Err) => {
                 console.log(Err);
             });
-    }
-
-    // Get the modal
-
-
-    // When the user clicks the button, open the modal 
-
-
-    // When the user clicks on <span> (x), close the modal
-    span.onclick = function() {
-
-        modal.style.display = "none";
-        event.preventDefault();
     }
 
     window.onclick = function(event) {

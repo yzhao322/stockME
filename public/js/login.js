@@ -5,6 +5,11 @@ $(document).ready(function() {
     var passwordInput = $("input#password-input");
     var titleInput = $("#selector :selected");
 
+    document.getElementById("clickMe").addEventListener("click", myFunction);
+
+    var modal = document.getElementById("myModal");
+
+
 
     // When the form is submitted, we validate there's an email and password entered
     loginForm.on("submit", function(event) {
@@ -25,6 +30,8 @@ $(document).ready(function() {
         passwordInput.val("");
     });
 
+
+
     // loginUser does a post to our "api/login" route and if successful, redirects us the the members page
     function loginUser(email, password, title) {
         $.post("/api/login", {
@@ -42,8 +49,27 @@ $(document).ready(function() {
                 }
             })
             .catch(function(err) {
-                alert("Sorry! Support team is on the way! - (Error code: E-LOG-01");
+                $(".modal-header").css("background-color", "orange");
+                modal.style.display = "block";
                 console.log(err);
             });
+    }
+
+
+
+    // Get the <span> element that closes the modal
+    var span = document.getElementsByClassName("close")[0];
+
+    function myFunction() {
+        window.location.href = "/signup.html";
+    }
+
+    span.onclick = function() {
+        modal.style.display = "none";
+    }
+    window.onclick = function(event) {
+        if (event.target == modal) {
+            modal.style.display = "none";
+        }
     }
 });
