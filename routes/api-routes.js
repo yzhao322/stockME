@@ -85,7 +85,7 @@ module.exports = function(app) {
         res.json({
           email: req.user.email,
           id: req.user.id,
-          data: stockdata 
+          data: stockdata,
         });
       });
     }
@@ -118,6 +118,7 @@ module.exports = function(app) {
         });
       });
   });
+  
 
   app.delete("/api/user_data/:stockname", function (req, res) {
     db.Stock.destroy({

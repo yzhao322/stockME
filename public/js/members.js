@@ -53,9 +53,12 @@ $(".searching-stock").hide();
   
   $.get("/api/user_data").then(function (data) {
     $(".member-name").text(data.email);
+    console.log(data);
     for (let i = 0; i < data.data.length; i++) {
-        $(".stock-button").append($("<button>").attr("class", "search-buttton").attr("id", `${data.data[i].stockname}`).text(data.data[i].stockname.toUpperCase()).css("border-radius","6px"));
-        $("form.search").append($("<p>").text(data.data[i].stockname.toUpperCase()));
+      $(".stock-button").append($("<button>").attr("class", "search-buttton").attr("id", `${data.data[i].stockname}`).text(data.data[i].stockname.toUpperCase()).css("border-radius", "6px"));
+      $(".notes-stocknames").append($("<option>").text(data.data[i].stockname.toUpperCase()).css("border-radius", "6px"));
+      $("form.search").append($("<p>").text(data.data[i].stockname.toUpperCase()));
+      $("form.search").append($("<p>").text("Notes: "+data.data[i].stocknotes));
         $("form.search").append($("<br>"));
         userNotes.push({ 'symbol': data.data[i].stockname, 'notes': data.data[i].stocknotes })
       }
@@ -132,7 +135,8 @@ $(".searching-stock").hide();
     $(".inverstments-panel").css("display", "none");
     let notes = stocknotes.val().trim();
 
-    let stockName = $(".info1").text().slice(9);
+    let stockName = $(".notes-stocknames :selected").text();
+    alert(stockName);
  
 
     if (!stockName || !notes) {
@@ -157,12 +161,12 @@ $(".searching-stock").hide();
     let username = $(".member-name").text();
     $(".stock-info").css("display", "block");
     $(".stock-opration").css("display", "block");
-    getStockData(symbol, username, userNotes);
+    getStockData(symbol, username);
   });
 
 })
 
-function getStockData(symbol, username, userNotes) {
+function getStockData(symbol, username) {
   $.get(`/api/search_this_stock/${symbol}`).then(function (data) {
     $(".info1").text("symbol:  " + data["Global Quote"]["01. symbol"]);
     $(".info2").text("open:  " + data["Global Quote"]["02. open"]);
@@ -191,13 +195,11 @@ function getStockData(symbol, username, userNotes) {
       purchaseInput.val("");
     });
   
-
-    for (let i = 0; i < userNotes.length; i++) {
-      if (userNotes[i].symbol === data["Global Quote"]["01. symbol"]) {
-        $("#userNotes").text(userNotes[i].notes);
-      };
-    };
-
+    // for (let i = 0; i < userNotes.length; i++) {
+    //   if (userNotes[i].symbol === data["Global Quote"]["01. symbol"]) {
+    //     $("#userNotes").text(userNotes[i].notes);
+    //   };
+    // };
   }).catch((Err) => {
     console.log(Err);
   });
