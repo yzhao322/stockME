@@ -150,14 +150,14 @@ $(document).ready(function() {
     //clear all stock on stock search panel
     clearAll.on("submit", function(event) {
         event.preventDefault();
-
+        let username = $(".member-name").text();
         $(".welcome").css("display", "block");
-        confirmClearAll();
+        confirmClearAll(username);
     });
 
-    function confirmClearAll() {
+    function confirmClearAll(username) {
         if (confirm("Are you sure to delete all?")) {
-            deleteALL();
+            deleteALL(username);
         }
         return false;
     }
@@ -280,10 +280,10 @@ function deleteStock(Name) {
         })
 }
 
-function deleteALL() {
+function deleteALL(username) {
     $.ajax({
             method: "DELETE",
-            url: "/api/user_data"
+            url: "/api/user_data/all/" + username
         })
         .then(function() {
             alert("All stocks deleted successfully");
