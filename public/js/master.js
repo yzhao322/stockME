@@ -1,4 +1,4 @@
-$(document).ready(function () {
+$(document).ready(function() {
     const upgrade = $("form.upgrade");
     const degrade = $("form.degrade");
 
@@ -23,6 +23,8 @@ $(document).ready(function () {
                 window.location.replace("/master");
             })
             .catch((Err) => {
+                alert("Sorry! Support team is on the way! - (Error code: E-MAS-01");
+
                 console.log(Err);
             });
     }
@@ -37,6 +39,7 @@ $(document).ready(function () {
                 window.location.replace("/master");
             })
             .catch((Err) => {
+                alert("Sorry! Support team is on the way! - (Error code: E-MAS-02");
                 console.log(Err);
             });
     }

@@ -1,4 +1,4 @@
-$(document).ready(function () {
+$(document).ready(function() {
     const viewDetails = $(".view-details");
     const deleteAccount = $(".delete-account");
     const notesContent = $("textarea#account-notes");
@@ -18,30 +18,30 @@ $(document).ready(function () {
     $("span").hide();
 
     $(".user-list-info").hide();
-    $("li#user-list-info").click(function (event) {
+    $("li#user-list-info").click(function(event) {
         event.preventDefault();
         $('.user-list-info').toggle("slide");
     });
 
     $(".account-management").hide();
-    $("li#account-management").click(function (event) {
+    $("li#account-management").click(function(event) {
         event.preventDefault();
         $('.account-management').toggle("slide");
     });
 
     $("form.notePanel").hide();
-    $("li#notePanel").click(function (event) {
+    $("li#notePanel").click(function(event) {
         event.preventDefault();
         $('form.notePanel').toggle("slide");
     });
 
-    account.on("click", function (event) {
+    account.on("click", function(event) {
         event.preventDefault();
         $("form span").show();
         $("#addNoteMsg").text("Enter a note that you want to add to this account");
     })
 
-    viewDetails.on("click", function (event) {
+    viewDetails.on("click", function(event) {
         event.preventDefault();
         let username = this.name;
         getDetail(username);
@@ -49,7 +49,7 @@ $(document).ready(function () {
 
     });
 
-   addNotebtn.on("click", function (event) {
+    addNotebtn.on("click", function(event) {
         event.preventDefault();
 
         let notes = notesContent.val().trim();
@@ -61,23 +61,23 @@ $(document).ready(function () {
         if (username) {
             document.getElementById("addNoteMsg").textContent = "You have updated notes to ：" + username;
             addNotesTo(username, notes);
-
+            modal.style.display = "block";
         } else if (username2) {
             document.getElementById("addNoteMsg").textContent = "You have updated notes to ： " + username2;
             addNotesTo(username2, notes);
+            modal.style.display = "block";
 
-
-       } else { 
-           onsole.log("Nothing is selected")
+        } else {
+            alert("Nothing is selected")
         }
 
-        modal.style.display = "block";
+
 
     });
 
 
 
-    deleteAccount.on("click", function (event) {
+    deleteAccount.on("click", function(event) {
         event.preventDefault();
         let username = this.name;
         deleteThisAccount(username);
@@ -86,16 +86,16 @@ $(document).ready(function () {
 
 
     function getDetail(username) {
-        $.get("/api/user/" + username).then(function (data) {
-            $(".user-list").text("");
-            let createdDate = $("<p>").text(data.email + " is created at: " + data.createdAt);
-            $(".user-list").append($("<hr>"));
-            $(".user-list").append(createdDate);
-            let accountNotes = $("<p>").text(data.email + "'s notes : " + data.notes);
-            $(".user-list").append(accountNotes);
-            $("#selectedUser").text("You have selected :")
-            $("#usernameDisplay").text(data.email);
-        })
+        $.get("/api/user/" + username).then(function(data) {
+                $(".user-list").text("");
+                let createdDate = $("<p>").text(data.email + " is created at: " + data.createdAt);
+                $(".user-list").append($("<hr>"));
+                $(".user-list").append(createdDate);
+                let accountNotes = $("<p>").text(data.email + "'s notes : " + data.notes);
+                $(".user-list").append(accountNotes);
+                $("#selectedUser").text("You have selected :")
+                $("#usernameDisplay").text(data.email);
+            })
             .catch((Err) => {
                 console.log(Err);
             });
@@ -103,10 +103,10 @@ $(document).ready(function () {
 
     function addNotesTo(username, notes) {
         $.ajax({
-            method: "PUT",
-            url: "/api/user/notes/" + username,
-            data: { notes: notes }
-        })
+                method: "PUT",
+                url: "/api/user/notes/" + username,
+                data: { notes: notes }
+            })
             .catch((Err) => {
                 console.log(Err);
             });
@@ -115,10 +115,10 @@ $(document).ready(function () {
 
     function deleteThisAccount(username) {
         $.ajax({
-            method: "DELETE",
-            url: "/api/user/" + username
-        })
-            .then(function () {
+                method: "DELETE",
+                url: "/api/user/" + username
+            })
+            .then(function() {
                 window.location.replace("/managers");
             })
             .catch((Err) => {
@@ -133,13 +133,13 @@ $(document).ready(function () {
 
 
     // When the user clicks on <span> (x), close the modal
-    span.onclick = function () {
+    span.onclick = function() {
 
         modal.style.display = "none";
         event.preventDefault();
     }
 
-    window.onclick = function (event) {
+    window.onclick = function(event) {
         if (event.target == modal) {
             modal.style.display = "none";
             event.preventDefault();
