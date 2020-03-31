@@ -51,7 +51,6 @@ $(document).ready(function() {
             .catch(function(err) {
                 $(".modal-header").css("background-color", "orange");
                 modal.style.display = "block";
-                console.log(err);
             });
     }
 

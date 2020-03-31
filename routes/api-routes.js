@@ -25,8 +25,8 @@ module.exports = function(app) {
                 res.redirect(307, "/api/login");
             })
             .catch(function(err) {
-                alert("Error Code: E-API-P-01");
-                console.log(err);
+                res.status(401).json(err);
+
             });
     });
 
