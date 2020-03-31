@@ -8,7 +8,7 @@ select * from stockpurchasedbyuser;
 update users set title = "Master"
 where email = "yan@123.com";
 update users set title = "Manager"
-where email = "saint@123.com";
+where email = "yan@123.com";
 drop table stocks;
 drop table users;
 
