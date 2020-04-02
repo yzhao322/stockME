@@ -1,6 +1,8 @@
 # StockME
 [Stock ME Deploy Application!](http://polar-dawn-54577.herokuapp.com/login.html) - http://polar-dawn-54577.herokuapp.com/login.html
 
+* For the demo purpose, we create three different account : master@123.com, manager@123.com, member@123.com. All three account password is :123456
+
 <img src="./demo/app.png" >
 
 * This is a stock-related app which can help user keep their investments in record, and also let manager and master control users account which we call it member account. 
